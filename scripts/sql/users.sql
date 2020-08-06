@@ -1,9 +1,10 @@
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `loginName` varchar(20) DEFAULT NULL,
-  `passwd` varchar(255) DEFAULT NULL,
-  `loginType` varchar(20) DEFAULT NULL,
-  `landHere` text,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `loginName` (`loginName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+CREATE TABLE users (
+  id int auto_increment,
+  loginName varchar(20),
+  passwd varchar(255),
+  loginType varchar(20),
+  timezone varchar(255),
+  landHere text,
+  primary key (id),
+  unique key (loginName)
+);
