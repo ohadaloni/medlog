@@ -38,22 +38,24 @@ class MedLog extends Mcontroller {
 	/*------------------------------*/
 	protected function before() {
 		parent::before();
-		ini_set('max_execution_time', 10);
-		ini_set("memory_limit", "5M");
-
 		$this->startTime = microtime(true);
+		ini_set('max_execution_time', 10);
+		ini_set("memory_limit", "30M");
+
+		if ( $this->loginId ) {
+			$loginName = $this->loginName;
+			$sql = "select timezone from users where loginName = '$loginName'";
+			$tz = $this->Mmodel->getString($sql);
+			if ( $tz ) {
+				Mutils::setenv("tz", $tz);
+				date_default_timezone_set($tz);
+			}
+		}
 		if ( $this->showMargins()) {
 			$this->Mview->showTpl("head.tpl");
 			$this->Mview->showTpl("header.tpl");
 			$this->Mview->assign("RE_CAPTACH_SITE_KEY", RE_CAPTACH_SITE_KEY);
 			if ( $this->loginId ) {
-				$loginName = $this->loginName;
-				$sql = "select timezone from users where loginName = '$loginName'";
-				$tz = $this->Mmodel->getString($sql);
-				if ( $tz ) {
-					Mutils::setenv("tz", $tz);
-					date_default_timezone_set($tz);
-				}
 				$menu = new Menu;
 				$menu->index();
 			}
@@ -321,6 +323,15 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("setTz.tpl", array(
 			'tzs' => $tzs,
 		));
+	}
+	/*------------------------------------------------------------*/
+	public function export() {
+		$loginName = $this->loginName;
+		$fields = "description, quantity, datetime, comments";
+		$sql = "select $fields from medLog order by description, date, datetime";
+		$rows = $this->Mmodel->getRows($sql);
+		$date = date("Y-m-d");
+		$this->exportToExcel($rows, "MedLog.$loginName.$date");
 	}
 	/*------------------------------------------------------------*/
 	/*------------------------------------------------------------*/
