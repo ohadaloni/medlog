@@ -33,12 +33,6 @@
 					{/if}
 				</td>
 				<td>
-					<a href="/cal?eventType=medLog&singleMed={$description}&datetime={$row.datetime}"><img
-						src="/images/calendar.png"
-					/></a>
-				</td>
-				<td>
-				<td>
 					<a href="/medLog/edit?description={$description}&id={$row.id}"><img
 						src="/images/edit.png"
 						title="Edit"
