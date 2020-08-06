@@ -39,6 +39,11 @@ class Menu extends Mcontroller {
 					'url' => "/medLog/myTimeZone",
 				),
 				array(
+					'name' => 'export',
+					'title' => 'Export CSV',
+					'url' => "/medLog/export",
+				),
+				array(
 					'name' => 'chpass',
 					'title' => 'Change Password',
 					'url' => "/medLog/changePasswd",
