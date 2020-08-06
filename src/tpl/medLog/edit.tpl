@@ -13,7 +13,7 @@
 			</tr>
 			<tr class="medLogRow">
 				<td>
-					description
+					Description
 				</td>
 				<td>
 					<input type="text" name="description" value="{$row.description}" />
@@ -21,10 +21,10 @@
 			</tr>
 			<tr class="medLogRow">
 				<td>
-					Dosage
+					Quantity
 				</td>
 				<td>
-					{msuShowTpl file="selectString.tpl"  name="dosage" from=$dosages selected=$row.dosage}
+					<input type="text" name="quantity" value="{$row.quantity}" />
 				</td>
 			</tr>
 			<tr class="medLogRow">

@@ -6,8 +6,7 @@
 		</tr>
 		<tr class="medLogHeaderRow">
 			<td>#</td>
-			<td>dosage</td>
-			<td>mg</td>
+			<td>quantity</td>
 			<td>datetime</td>
 			<td>comments</td>
 			<td colspan="5"></td>
@@ -17,18 +16,17 @@
 			{assign var=No value=`$numRows-$key`}
 			<tr class="medLogRow">
 				<td>{$No}</td>
-				<td>{$row.dosage}</td>
-				<td>{$row.mg}</td>
+				<td>{$row.quantity}</td>
 				<td>{$row.datetime|substr:0:16}</td>
 				<td>{$row.comments|nl2br}</td>
 				<td>
 					{if $key == 0}
-						<a href="/medLog/insert?description={$row.description}&dosage={$row.dosage}"><img
+						<a href="/medLog/insert?description={$row.description}&quantity={$row.quantity}"><img
 							src="/images/go.png"
 							title="Taking Now"
 						/></a>
 					{else}
-						<a href="/medLog/insert?date={$row.date}&datetime={$row.date}+12:00&description={$row.description}&dosage={$row.dosage}"><img
+						<a href="/medLog/insert?date={$row.date}&datetime={$row.date}+12:00&description={$row.description}&quantity={$row.quantity}"><img
 							src="/images/duplicate.png"
 							title="Duplicate"
 						/></a>
