@@ -5,10 +5,10 @@
 				<tr class="medLogHeaderRow">
 					<td>Files</td>
 				</tr>
-				{foreach from=$files item=file}
+				{foreach from=$files item=fileName}
 					<tr class="medLogRow">
 						<td>
-							<a href="/showSource?file={$file}">{$file}</a>
+							<a href="/showSource?file={$fileName}">{$fileName}</a>
 						</td>
 					</tr>
 				{/foreach}
