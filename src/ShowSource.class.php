@@ -9,6 +9,7 @@ class ShowSource extends MedLog {
 			$source = highlight_file($file, true);
 		}
 		$this->Mview->showTpl("showSource/showSource.tpl",  array(
+			'file' => $file,
 			'files' => $files,
 			'source' => @$source,
 
