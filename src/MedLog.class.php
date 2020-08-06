@@ -42,38 +42,22 @@ class MedLog extends Mcontroller {
 		ini_set("memory_limit", "5M");
 
 		$this->startTime = microtime(true);
-		$this->Mview->assign(array(
-			'controller' => $this->controller,
-			'action' => $this->action,
-		));
 		if ( $this->showMargins()) {
 			$this->Mview->showTpl("head.tpl");
 			$this->Mview->showTpl("header.tpl");
 			$this->Mview->assign("RE_CAPTACH_SITE_KEY", RE_CAPTACH_SITE_KEY);
 			if ( $this->loginId ) {
+				$sql = "select timezone from users where loginName = '$loginName'";
+				$tz = $this->Mmodel->getString($sql);
+				if ( $tz ) {
+					Mutils::setenv("tz", $tz);
+					date_default_timezone($tz);
+				}
 				$menu = new Menu;
 				$menu->index();
 			}
 			$this->showMsgs();
 		}
-		$sql = "select distinct description from medLog order by description";
-		$meds = $this->Mmodel->getStrings($sql);
-		$this->Mview->assign(array(
-			'meds' => $meds,
-			'dosages' => array(
-				0.125, 
-				0.25, 
-				0.5, 
-				1, 
-				1.5,
-				2,
-				3,
-				5,
-				10,
-				20,
-				30,
-			),
-		));
 	}
 	/*------------------------------------------------------------*/
 	protected function after() {
@@ -89,20 +73,13 @@ class MedLog extends Mcontroller {
 	}
 	/*------------------------------------------------------------*/
 	public function index() {
-		if ( $this->loginId )
-			$this->show();
-		else
+		if ( $this->loginId ) {
+			$this->summary();
+			$this->add();
+		} else {
 			$this->Mview->showTpl("login.tpl");
+		}
 	}
-	/*------------------------------------------------------------*/
-	public function show() {
-		$on = $this->onMeds(date("Y-m-d H:i:s"));
-		$this->Mview->msg("MedLog - on: $on");
-		$this->add();
-		$this->br();
-		$this->summary();
-	}
-	/*------------------------------------------------------------*/
 	/*------------------------------------------------------------*/
 	/*------------------------------------------------------------*/
 	public function forgotPass() {
@@ -244,7 +221,6 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	public function history() {
 		$description = $_REQUEST['description'];
-		$this->add($description);
 		$this->_history($description);
 	}
 	/*------------------------------------------------------------*/
@@ -261,9 +237,9 @@ class MedLog extends Mcontroller {
 		foreach ( $rows as $key => $row ) {
 			$description = $row['description'];
 			$datetime = $row['datetime'];
-			$sql = "select dosage from medLog where description = '$description' and datetime = '$datetime'";
-			$dosage = $this->Mmodel->getString($sql);
-			$rows[$key]['dosage'] = $dosage;
+			$sql = "select quantity from medLog where description = '$description' and datetime = '$datetime'";
+			$quantity = $this->Mmodel->getString($sql);
+			$rows[$key]['quantity'] = $quantity;
 		}
 		$this->Mview->showTpl("medLog/summary.tpl", array(
 			'rows' => $rows,
@@ -287,13 +263,13 @@ class MedLog extends Mcontroller {
 		$comments = $_REQUEST['comments'];
 		$datetime = "$date $time";
 		$description = @$_REQUEST['description'];
-		$dosage = @$_REQUEST['dosage'];
+		$quantity = @$_REQUEST['quantity'];
 		$this->Mmodel->dbUpdate("medLog", $id, array(
 			'date' => $date,
 			'datetime' => $datetime,
 			'comments' => $comments,
 			'description' => $description,
-			'dosage' => $dosage,
+			'quantity' => $quantity,
 		));
 		$this->redir();
 	}
@@ -308,15 +284,8 @@ class MedLog extends Mcontroller {
 		$this->redir();
 	}
 	/*------------------------------------------------------------*/
-	public function add($description = null) {
-		$this->Mview->showTpl("medLog/add.tpl", array(
-			'description' => $description,
-		));
-	}
-	/*------------------------------------------------------------*/
 	public function insert() {
 		$description = @$_REQUEST['description'];
-		$newDescription = @$_REQUEST['newDescription'];
 		$comments = @$_REQUEST['comments'];
 		$date = @$_REQUEST['date'];
 		if ( ! $date )
@@ -325,15 +294,11 @@ class MedLog extends Mcontroller {
 		if ( ! $datetime )
 			$datetime = date("Y-m-d H:i:s");
 		
-		if ( $newDescription )
-			$description = $newDescription;
+		$quantity = @$_REQUEST['quantity'];
 
-		$dosage = @$_REQUEST['dosage'];
-		if ( ! $dosage )
-			$dosage = 1;
 		$id = $this->Mmodel->dbInsert("medLog", array(
 			'user' => $this->loginName,
-			'dosage' => $dosage,
+			'quantity' => $quantity,
 			'description' => $description,
 			'date' => $date,
 			'datetime' => $datetime,
@@ -342,27 +307,25 @@ class MedLog extends Mcontroller {
 		$this->redir(@$_REQUEST['date'] ? $id : null);
 	}
 	/*------------------------------------------------------------*/
-	/*------------------------------------------------------------*/
-	private function onMeds($datetime) {
-		// what meds am I on at the time
-		$time = strtotime($datetime);
-		$start = $time - 12*3600;
-		$end = $time - 15*60;
-		$startDatetime = date("Y-m-d H:i:s", $start);
-		$endDatetime = date("Y-m-d H:i:s", $end);
-		$timeCond = "datetime between '$startDatetime' and '$endDatetime'";
-		$sql = "select * from medLog where $timeCond order by datetime";
-		$rows = $this->Mmodel->getRows($sql);
-		$on = array();
-		foreach ( $rows as $row ) {
-			$description = $row['description'];
-			$dosage = $row['dosage'];
-			if ( $dosage != 1 )
-				$description = "$dosage $description";
-			$on[] = $description;
+	public function myTimeZone() {
+		$tz = @$_REQUEST['tz'];
+		if ( $tz ) {
+			$this->Mmodel->dbUpdate("users", $this->loginId, array(
+				'timezone' => $tz,
+			));
+			$this->redir();
 		}
-		$on = implode(", ", $on);
-		return($on);
+		$sql = "select tz from timezones order by 1";
+		$tzs = $this->Mmodel->getStrings($sql, 24*3600);
+		Mview::print_r($tzs, "tzs", basename(__FILE__), __LINE__, null, false);
+		$this->Mview->showTpl("setTz.tpl", array(
+			'tzs' => $tzs,
+		));
+	}
+	/*------------------------------------------------------------*/
+	/*------------------------------------------------------------*/
+	private function add() {
+		$this->Mview->showTpl("medLog/add.tpl");
 	}
 	/*------------------------------------------------------------*/
 	private function _history($description) {
@@ -386,9 +349,6 @@ class MedLog extends Mcontroller {
 			return;
 		}
 		$description = @$_REQUEST['description'];
-		$newDescription = @$_REQUEST['newDescription'];
-		if ( $newDescription )
-			$description = $newDescription;
 		if ( $description )
 			$this->redirect("/medLog/history?description=$description");
 		else
@@ -402,13 +362,11 @@ class MedLog extends Mcontroller {
 				'export',
 			),
 		);
-		$controller = $this->controller;
-		$action = $this->action;
 		foreach( $nots as $notClassName => $notClass )
 			foreach( $notClass as $notAction )
-				if ( strcasecmp($notClassName, $controller) == 0
+				if ( strcasecmp($notClassName, $this->controller) == 0
 						&& 
-						( strcasecmp($notAction, $action) == 0 || $notAction == 'any' )
+						( strcasecmp($notAction, $this->action) == 0 || $notAction == 'any' )
 					) {
 						return(false);
 					}

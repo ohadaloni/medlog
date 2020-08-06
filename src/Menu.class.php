@@ -26,8 +26,18 @@ class Menu extends Mcontroller {
 			),
 		);
 		$loginName = MedLogLogin::loginName();
-		if ( $loginName )
+		if ( $loginName ) {
+			$tz = Mutils::getenv("tz");
+			if ( $tz )
+				$tzTitle = "My Time Zone - $tz";
+			else
+				$tzTitle = "My Time Zone";
 			$menu[$loginName] = array(
+				array(
+					'name' => 'tz',
+					'title' => $tzTitle,
+					'url' => "/medLog/myTimeZone",
+				),
 				array(
 					'name' => 'chpass',
 					'title' => 'Change Password',
@@ -39,8 +49,8 @@ class Menu extends Mcontroller {
 					'url' => "/?logOut=logOut",
 				),
 			);
+		}
 		return($menu);
 	}
 	/*------------------------------------------------------------*/
 }
-
