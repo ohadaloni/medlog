@@ -47,11 +47,12 @@ class MedLog extends Mcontroller {
 			$this->Mview->showTpl("header.tpl");
 			$this->Mview->assign("RE_CAPTACH_SITE_KEY", RE_CAPTACH_SITE_KEY);
 			if ( $this->loginId ) {
+				$loginName = $this->loginName;
 				$sql = "select timezone from users where loginName = '$loginName'";
 				$tz = $this->Mmodel->getString($sql);
 				if ( $tz ) {
 					Mutils::setenv("tz", $tz);
-					date_default_timezone($tz);
+					date_default_timezone_set($tz);
 				}
 				$menu = new Menu;
 				$menu->index();
@@ -317,7 +318,6 @@ class MedLog extends Mcontroller {
 		}
 		$sql = "select tz from timezones order by 1";
 		$tzs = $this->Mmodel->getStrings($sql, 24*3600);
-		Mview::print_r($tzs, "tzs", basename(__FILE__), __LINE__, null, false);
 		$this->Mview->showTpl("setTz.tpl", array(
 			'tzs' => $tzs,
 		));
