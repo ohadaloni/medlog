@@ -1,6 +1,5 @@
 <?php
 /*------------------------------------------------------------*/
-date_default_timezone_set("Asia/Jerusalem");
 require_once("medLogConfig.php");
 require_once(M_DIR."/mfiles.php");
 require_once("medLogFiles.php");
