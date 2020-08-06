@@ -179,7 +179,12 @@ class MedLog extends Mcontroller {
 			'passwd' => $dbPasswd,
 		));
 		if ( ! $id ) {
-			$this->Mview->error("insert failed");
+			$err = $this->Mmodel->lastError();
+			if ( stristr($err, "duplicate") ) {
+				$this->Mview->error("Clicked twice? Please use 'Forgot Password' if you forgot your password.");
+			} else {
+				$this->Mview->error("insert failed");
+			}
 			return;
 		}
 		$this->Mview->urlMsg("registration successful", "http://medlog.theora.com");
