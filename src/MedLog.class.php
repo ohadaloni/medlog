@@ -182,6 +182,7 @@ class MedLog extends Mcontroller {
 			$err = $this->Mmodel->lastError();
 			if ( stristr($err, "duplicate") ) {
 				$this->Mview->error("Clicked twice? Please use 'Forgot Password' if you forgot your password.");
+				Mlogin::logout();
 			} else {
 				$this->Mview->error("insert failed");
 			}
