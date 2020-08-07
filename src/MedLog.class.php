@@ -61,7 +61,6 @@ class MedLog extends Mcontroller {
 				'title' => $title,
 			));
 			$this->Mview->showTpl("header.tpl", array(
-				'loginName' => $loginName,
 				'datetime' => $datetime,
 			));
 			$this->Mview->assign("RE_CAPTACH_SITE_KEY", RE_CAPTACH_SITE_KEY);
