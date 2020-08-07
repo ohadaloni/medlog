@@ -4,7 +4,6 @@ class MedLog extends Mcontroller {
 	/*------------------------------*/
 	protected $loginName;
 	protected $loginId;
-	protected $loginType;
 	/*------------------------------*/
 	protected $Mmemcache;
 	/*------------------------------*/
@@ -16,7 +15,6 @@ class MedLog extends Mcontroller {
 		$medLogLogin = new MedLogLogin;
 		$this->loginId = MedLogLogin::loginId();
 		$this->loginName = MedLogLogin::loginName();
-		$this->loginType = MedLogLogin::loginType();
 
 		$this->Mmemcache = new Mmemcache;
 		Mutils::setenv("debugLevel", 1);
@@ -43,17 +41,29 @@ class MedLog extends Mcontroller {
 		ini_set("memory_limit", "30M");
 
 		if ( $this->loginId ) {
-			$loginName = $this->loginName;
-			$sql = "select timezone from users where loginName = '$loginName'";
-			$tz = $this->Mmodel->getString($sql);
-			if ( $tz ) {
-				Mutils::setenv("tz", $tz);
-				date_default_timezone_set($tz);
+			$loginRec = $this->Mmodel->getById("users", $this->loginId);
+			$timezone = $loginRec['timezone'];
+			if ( $timezone ) {
+				Mutils::setenv("tz", $timezone);
+				date_default_timezone_set($timezone);
 			}
 		}
 		if ( $this->showMargins()) {
-			$this->Mview->showTpl("head.tpl");
-			$this->Mview->showTpl("header.tpl");
+			$datetime = date("Y-m-d G:i:s T");
+			if ( $this->loginId ) {
+				$loginName = $this->loginName;
+				$timezone = $loginRec['timezone'];
+				$title = "Medlog - $loginName - $datetime";
+			} else {
+				$title = "Medlog - $datetime";
+			}
+			$this->Mview->showTpl("head.tpl", array(
+				'title' => $title,
+			));
+			$this->Mview->showTpl("header.tpl", array(
+				'loginName' => $loginName,
+				'datetime' => $datetime,
+			));
 			$this->Mview->assign("RE_CAPTACH_SITE_KEY", RE_CAPTACH_SITE_KEY);
 			if ( $this->loginId ) {
 				$menu = new Menu;
