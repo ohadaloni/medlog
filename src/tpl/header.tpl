@@ -8,4 +8,8 @@
 		<br />
 		Calmly Take Meds
 </center>
-<br />
+{if $loginName}
+	<div class="container">
+		<h4 style="color:blue;">{$loginName} - {$datetime}</h4>
+	</div>
+{/if}
