@@ -7,6 +7,8 @@ class MedLog extends Mcontroller {
 	/*------------------------------*/
 	protected $Mmemcache;
 	/*------------------------------*/
+	protected $loginRec;
+	/*------------------------------*/
 	private $startTime;
 	/*------------------------------------------------------------*/
 	public function __construct() {
@@ -41,8 +43,8 @@ class MedLog extends Mcontroller {
 		ini_set("memory_limit", "30M");
 
 		if ( $this->loginId ) {
-			$loginRec = $this->Mmodel->getById("users", $this->loginId);
-			$timezone = $loginRec['timezone'];
+			$this->loginRec = $this->Mmodel->getById("users", $this->loginId);
+			$timezone = $this->loginRec['timezone'];
 			if ( $timezone ) {
 				Mutils::setenv("tz", $timezone);
 				date_default_timezone_set($timezone);
@@ -52,7 +54,6 @@ class MedLog extends Mcontroller {
 			$datetime = date("Y-m-d G:i:s T");
 			if ( $this->loginId ) {
 				$loginName = $this->loginName;
-				$timezone = $loginRec['timezone'];
 				$title = "Medlog - $loginName - $datetime";
 			} else {
 				$title = "Medlog - $datetime";
@@ -87,8 +88,12 @@ class MedLog extends Mcontroller {
 	public function index() {
 		$loginName = $this->loginName;
 		if ( $this->loginId ) {
-			$this->summary();
-			$this->add();
+			if ( $this->loginRec['timezone'] ) {
+				$this->summary();
+				$this->add();
+			} else {
+				$this->redirect("/medlog/myTimeZone");
+			}
 		} else {
 			$this->Mview->showTpl("login.tpl");
 		}
