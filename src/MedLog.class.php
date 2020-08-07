@@ -51,7 +51,7 @@ class MedLog extends Mcontroller {
 			}
 		}
 		if ( $this->showMargins()) {
-			$datetime = date("Y-m-d G:i:s T");
+			$datetime = date("Y-m-d G:i T");
 			if ( $this->loginId ) {
 				$loginName = $this->loginName;
 				$title = "Medlog - $loginName - $datetime";
