@@ -51,7 +51,7 @@ class MedLog extends Mcontroller {
 			}
 		}
 		if ( $this->showMargins()) {
-			$datetime = date("Y-m-d G:i T");
+			$datetime = date("D Y-m-d G:i T");
 			if ( $this->loginId ) {
 				$loginName = $this->loginName;
 				$title = "Medlog - $loginName - $datetime";
@@ -69,7 +69,6 @@ class MedLog extends Mcontroller {
 				$menu = new Menu;
 				$menu->index();
 			}
-			$this->showMsgs();
 			$this->alarms();
 		}
 	}
@@ -414,10 +413,14 @@ class MedLog extends Mcontroller {
 			return;
 		$time2take = $time2 + $avg;
 		$datetime2take = date("G:i", $time2take);
-		if ( $time2take < $now )
-			$msg = "Missed $datetime2take?";
+		if( date("D") == date("D", $time2take) )
+			$day = "Today";
 		else
-			$msg = "Due at $datetime2take";
+			$day = date("D", $time2take);
+		if ( $time2take < $now )
+			$msg = "Missed? $day at $datetime2take?";
+		else
+			$msg = "Due $day at $datetime2take";
 		$this->Mview->urlMsg("$description: $msg", "/medlog/history?description=$description");
 	}
 	/*------------------------------------------------------------*/
@@ -474,13 +477,6 @@ class MedLog extends Mcontroller {
 						return(false);
 					}
 		return(true);
-	}
-	/*------------------------------------------------------------*/
-	private function showMsgs() {
-		$msgs = Msession::get('msgBuf');
-		$this->Mview->showTpl("msgs.tpl", array(
-			'msgs' => $msgs,
-		));
 	}
 	/*------------------------------------------------------------*/
 }
