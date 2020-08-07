@@ -30,7 +30,8 @@ class MedLogLogin extends Mcontroller {
 	/*------------------------------------------------------------*/
 	public function dbEnter($loginName, $passwd) {
 		$fields = "id, loginName,loginType, passwd";
-		$sql = "select $fields from users where loginName = '$loginName'";
+		$str = $this->Mmodel->str($loginName);
+		$sql = "select $fields from users where loginName = '$str'";
 		$loginRecs = $this->Mmodel->getRows($sql);
 		foreach ( $loginRecs as $loginRec ) {
 			$dbPasswd = $loginRec['passwd'];
