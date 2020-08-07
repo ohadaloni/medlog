@@ -410,7 +410,7 @@ class MedLog extends Mcontroller {
 			return;
 
 		// not yet
-		if ( $diff2now < ( $avg * 0.8 ) )
+		if ( $diff2now < ( $avg * 0.9 ) )
 			return;
 		$time2take = $time2 + $avg;
 		$datetime2take = date("G:i", $time2take);
