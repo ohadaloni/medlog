@@ -76,6 +76,7 @@ class MedLog extends Mcontroller {
 	}
 	/*------------------------------------------------------------*/
 	public function index() {
+		$loginName = $this->loginName;
 		if ( $this->loginId ) {
 			$this->summary();
 			$this->add();
@@ -235,18 +236,22 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	public function summary() {
 		$fields = array(
+			'max(id) as id',
 			'description',
 			'max(date) as date',
 			'count(*) as cnt',
 			'max(datetime) as datetime',
 		);
 		$fields = implode(", ", $fields);
-		$sql = "select $fields from medLog group by 1 order by 4 desc";
+		$groupBy = "group by 2";
+		$orderBy = "order by 5 desc";
+		$loginName = $this->loginName;
+		$myCond = "user = '$loginName'";
+		$sql = "select $fields from medLog where $myCond $groupBy $orderBy";
 		$rows = $this->Mmodel->getRows($sql);
 		foreach ( $rows as $key => $row ) {
-			$description = $row['description'];
-			$datetime = $row['datetime'];
-			$sql = "select quantity from medLog where description = '$description' and datetime = '$datetime'";
+			$id = $row['id'];
+			$sql = "select quantity from medLog where id = $id";
 			$quantity = $this->Mmodel->getString($sql);
 			$rows[$key]['quantity'] = $quantity;
 		}
@@ -332,9 +337,11 @@ class MedLog extends Mcontroller {
 	}
 	/*------------------------------------------------------------*/
 	public function export() {
-		$loginName = $this->loginName;
 		$fields = "description, quantity, datetime, comments";
-		$sql = "select $fields from medLog order by description, date, datetime";
+		$loginName = $this->loginName;
+		$myCond = "user = '$loginName'";
+		$orderBy = "order by description, date, datetime";
+		$sql = "select $fields from medLog where $myCond $orderBy";
 		$rows = $this->Mmodel->getRows($sql);
 		$date = date("Y-m-d");
 		$this->exportToExcel($rows, "MedLog.$loginName.$date");
@@ -346,7 +353,13 @@ class MedLog extends Mcontroller {
 	}
 	/*------------------------------------------------------------*/
 	private function _history($description) {
-		$sql = "select * from medLog where description = '$description' order by datetime desc limit 1000";
+		$loginName = $this->loginName;
+		$myCond = "user = '$loginName'";
+		$dCond = "description = '$description'";
+		$conds = "$myCond and $dCond";
+		$orderBy = "order by datetime desc";
+		$limit = "limit 1000";
+		$sql = "select * from medLog where $conds $orderBy $limit";
 		$rows = $this->Mmodel->getRows($sql);
 		$this->br();
 		$this->Mview->showTpl("medLog/history.tpl", array(
