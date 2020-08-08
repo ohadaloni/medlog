@@ -2,14 +2,14 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
-			<td colspan="9">{$description} - history</td>
+			<td colspan="8">{$description} - history</td>
 		</tr>
 		<tr class="medLogHeaderRow">
 			<td>#</td>
 			<td>quantity</td>
-			<td>datetime</td>
+			<td colspan="2">datetime</td>
 			<td>comments</td>
-			<td colspan="5"></td>
+			<td colspan="3"></td>
 		<tr>
 		{assign var=numRows value=$rows|@count}
 		{foreach from=$rows key=key item=row}
@@ -17,6 +17,7 @@
 			<tr class="medLogRow">
 				<td>{$No}</td>
 				<td>{$row.quantity}</td>
+				<td>{$row.weekday}</td>
 				<td>{$row.datetime|substr:0:16}</td>
 				<td>{$row.comments|nl2br}</td>
 				<td>
