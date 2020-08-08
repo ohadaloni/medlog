@@ -268,6 +268,7 @@ class MedLog extends Mcontroller {
 			$sql = "select quantity from medLog where id = $id";
 			$quantity = $this->Mmodel->getString($sql);
 			$rows[$key]['quantity'] = $quantity;
+			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
 		}
 		$this->Mview->showTpl("medLog/summary.tpl", array(
 			'rows' => $rows,
@@ -438,6 +439,8 @@ class MedLog extends Mcontroller {
 		$sql = "select * from medLog where $conds $orderBy $limit";
 		$rows = $this->Mmodel->getRows($sql);
 		$this->br();
+		foreach ( $rows as $key => $row )
+			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
 		$this->Mview->showTpl("medLog/history.tpl", array(
 			'description' => $description,
 			'rows' => $rows,
