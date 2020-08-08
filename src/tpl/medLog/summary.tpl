@@ -3,7 +3,7 @@
 	<table>
 		<tr class="medLogHeaderRow">
 			<td>description</td>
-			<td>Last Taken</td>
+			<td colspan="2">Last Taken</td>
 			<td>Quantity</td>
 			<td>Taking Now</td>
 			<td>History</td>
@@ -11,6 +11,7 @@
 		{foreach from=$rows key=key item=row}
 			<tr class="medLogRow">
 				<td>{$row.description}</td>
+				<td>{$row.weekday}</td>
 				<td>{$row.datetime|substr:0:16}</td>
 				<td>{$row.quantity}</td>
 				<td>
