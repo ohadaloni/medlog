@@ -6,7 +6,7 @@ class MedLog extends Mcontroller {
 	protected $loginId;
 	/*------------------------------*/
 	protected $Mmemcache;
-	protected $MedLogUtils;
+	protected $medLogUtils;
 	/*------------------------------*/
 	protected $loginRec;
 	/*------------------------------*/
@@ -20,7 +20,7 @@ class MedLog extends Mcontroller {
 		$this->loginName = MedLogLogin::loginName();
 
 		$this->Mmemcache = new Mmemcache;
-		$this->MedLogUtils = new MedLogUtils;
+		$this->medLogUtils = new MedLogUtils;
 		Mutils::setenv("debugLevel", 1);
 	}
 	/*------------------------------------------------------------*/
@@ -366,7 +366,7 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	/*------------------------------------------------------------*/
 	private function alarms() {
-		$alarms = $this->MedLogUtils->alarms();
+		$alarms = $this->medLogUtils->alarms();
 		if ( ! $alarms )
 			return;
 		foreach ( $alarms as $alarm ) {
@@ -424,8 +424,11 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	private function showMargins() {
 		$nots = array(
-			'medLog' => array(
+			'medlog' => array(
 				'export',
+			),
+			'api' => array(
+				'any',
 			),
 		);
 		foreach( $nots as $notClassName => $notClass )
