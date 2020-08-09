@@ -2,11 +2,11 @@
 /*------------------------------------------------------------*/
 class MedLogUtils extends Mcontroller {
 	/*------------------------------------------------------------*/
-	public static function alarms() {
-		$alrms = array();
+	public function alarms() {
+		$alarms = array();
 		$loginName = MedLogLogin::loginName();
 		if ( ! $loginName )
-			return;
+			return(null);
 		$myCond = "user = '$loginName'";
 		$ago = date("Y-m-d", time() - 31*24*3600);
 		$agoCond = "date > '$ago'";
@@ -59,7 +59,7 @@ class MedLogUtils extends Mcontroller {
 		if( date("D") == date("D", $time2take) )
 			$day = "Today";
 		else
-			$day = date("D", $time2take);
+			$day = date("l", $time2take);
 		$missed = $time2take < $now;
 		$alarm = array(
 			'description' => $description,
