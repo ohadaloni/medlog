@@ -6,6 +6,7 @@ class MedLog extends Mcontroller {
 	protected $loginId;
 	/*------------------------------*/
 	protected $Mmemcache;
+	protected $MedLogUtils;
 	/*------------------------------*/
 	protected $loginRec;
 	/*------------------------------*/
@@ -19,6 +20,7 @@ class MedLog extends Mcontroller {
 		$this->loginName = MedLogLogin::loginName();
 
 		$this->Mmemcache = new Mmemcache;
+		$this->MedLogUtils = new MedLogUtils;
 		Mutils::setenv("debugLevel", 1);
 	}
 	/*------------------------------------------------------------*/
@@ -364,65 +366,20 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	/*------------------------------------------------------------*/
 	private function alarms() {
-		$loginName = $this->loginName;
-		if ( ! $loginName )
+		$alarms = $this->MedLogUtils->alarms();
+		if ( ! $alarms )
 			return;
-		$myCond = "user = '$loginName'";
-		$ago = date("Y-m-d", time() - 31*24*3600);
-		$agoCond = "date > '$ago'";
-		$conds = "$myCond and $agoCond";
-		$fields = "description, max(id) as id";
-		$groupBy = "group by 1";
-		$sql = "select $fields from medLog where $conds $groupBy";
-		$rows = $this->Mmodel->getRows($sql);
-		foreach ( $rows as $row )
-			$this->alarm($row['description']);
-	}
-	/*------------------------------*/
-	private function alarm($description) {
-		$loginName = $this->loginName;
-		$myCond = "user = '$loginName'";
-		$dCond = "description = '$description'";
-		$conds = "$myCond and $dCond";
-		$sql = "select datetime from medLog where $conds order by datetime desc limit 3";
-		$times = $this->Mmodel->getStrings($sql);
-		if ( count($times) != 3 )
-			return;
-		$now = time();
-		$time0 = strtotime($times[2]);
-		$time1 = strtotime($times[1]);
-		$time2 = strtotime($times[0]);
-		$diff1 = $time1 - $time0;
-		$diff2 = $time2 - $time1;
-		$diff2now = $now - $time2;
-
-		// diff1 & diff2 must be resonably the same
-		$d12 = $diff1 / $diff2 ;
-		if ( $d12 < 0.75 || $d12 > 1.25 ) {
-			// for debugging only:
-			/*	$this->Mview->msg("alarm($description): recent history too caotic");	*/
-			return;
+		foreach ( $alarms as $alarm ) {
+			$description = $alarm['description'];
+			$day = $alarm['day'];
+			$time = $alarm['time'];
+			$missed = $alarm['missed'];
+			if ( $missed )
+				$msg = "Missed? $day at $time?";
+			else
+				$msg = "Due $day at $time";
+			$this->Mview->urlMsg("$description: $msg", "/medlog/history?description=$description");
 		}
-		$avg = round(( $diff1 + $diff2) / 2) ;
-
-		// discontinued
-		if ( $diff2now > ( $avg * 2 ) )
-			return;
-
-		// not yet
-		if ( $diff2now < ( $avg * 0.9 ) )
-			return;
-		$time2take = $time2 + $avg;
-		$datetime2take = date("G:i", $time2take);
-		if( date("D") == date("D", $time2take) )
-			$day = "Today";
-		else
-			$day = date("D", $time2take);
-		if ( $time2take < $now )
-			$msg = "Missed? $day at $datetime2take?";
-		else
-			$msg = "Due $day at $datetime2take";
-		$this->Mview->urlMsg("$description: $msg", "/medlog/history?description=$description");
 	}
 	/*------------------------------------------------------------*/
 	private function add() {
