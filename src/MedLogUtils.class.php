@@ -53,7 +53,7 @@ class MedLogUtils extends Mcontroller {
 			return(null);
 
 		// not yet
-		if ( $diff2now < ( $avg * 0.9 ) )
+		if ( $diff2now < ( $avg * 0.7 ) )
 			return(null);
 		$time2take = $time2 + $avg;
 		if( date("D") == date("D", $time2take) )
