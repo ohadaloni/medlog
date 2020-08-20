@@ -52,10 +52,11 @@ class MedLogUtils extends Mcontroller {
 		if ( $diff2now > ( $avg * 2 ) )
 			return(null);
 
-		// not yet
-		if ( $diff2now < ( $avg * 0.5 ) )
-			return(null);
 		$time2take = $time2 + $avg;
+		$diffFromNow = $time2take - $now;
+		// not yet
+		if ( $diffFromNow > ( $avg * 0.5 ) || $diffFromNow > 24*3600 )
+			return(null);
 		if( date("D") == date("D", $time2take) )
 			$day = "Today";
 		else
