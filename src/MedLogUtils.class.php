@@ -41,11 +41,8 @@ class MedLogUtils extends Mcontroller {
 
 		// diff1 & diff2 must be resonably the same
 		$d12 = $diff1 / $diff2 ;
-		if ( $d12 < 0.75 || $d12 > 1.25 ) {
-			// for debugging only:
-			/*	$this->Mview->msg("alarm($description): recent history too caotic");	*/
+		if ( $d12 < 0.75 || $d12 > 1.25 )
 			return(null);
-		}
 		$avg = round(( $diff1 + $diff2) / 2) ;
 
 		// discontinued
