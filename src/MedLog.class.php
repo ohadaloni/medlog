@@ -202,7 +202,9 @@ class MedLog extends Mcontroller {
 			}
 			return;
 		}
-		$this->Mview->urlMsg("registration successful", "http://medlog.theora.com");
+		$this->Mview->tell("registration successful", array(
+			'url' => "http://medlog.theora.com",
+		));
 		$this->Mview->msg("password is $passwd");
 	}
 	/*------------------------------------------------------------*/
@@ -375,7 +377,9 @@ class MedLog extends Mcontroller {
 				$msg = "Missed? $day at $time?";
 			else
 				$msg = "Due $day at $time";
-			$this->Mview->urlMsg("$description: $msg", "/medlog/history?description=$description", false);
+			$this->Mview->tell("$description: $msg", array(
+				'url' => "/medlog/history?description=$description",
+			));
 		}
 	}
 	/*------------------------------------------------------------*/
