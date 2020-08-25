@@ -21,9 +21,10 @@ class MedLogLogin extends Mcontroller {
 			Mlogin::login($loginRec['id'], $loginName, $loginRec['loginType']);
 			return(true);
 		}
-		// this msg will be gotten after header from Msesssion
-		// so silent
-		Mview::msg("Incorrect password for $loginName", false, null, true);
+		$this->Mview->tell("Incorrect password for $loginName", array(
+			'silent' => true,
+			'rememberForNextPage' => true,
+		));
 		return(false);
 	}
 	/*------------------------------------------------------------*/
