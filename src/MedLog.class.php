@@ -71,6 +71,7 @@ class MedLog extends Mcontroller {
 				$menu = new Menu;
 				$menu->index();
 			}
+			$this->Mview->showMsgs();
 			$this->alarms();
 		}
 	}
