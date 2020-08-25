@@ -78,11 +78,7 @@ class MedLog extends Mcontroller {
 	protected function after() {
 		if ( ! $this->showMargins())
 			return;
-		$endTime = microtime(true);
-		$time = $endTime - $this->startTime ;
-		$millis = $time * 1000;
-		$millis = round($millis, 3);
-		$this->Mview->msg("Running Time: $millis milliseconds");
+		$this->Mview->runningTime($this->startTime);
 		$this->Mview->showTpl("footer.tpl");
 		$this->Mview->showTpl("foot.tpl");
 	}
