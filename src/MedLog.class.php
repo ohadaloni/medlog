@@ -378,7 +378,7 @@ class MedLog extends Mcontroller {
 				$msg = "Missed? $day at $time?";
 			else
 				$msg = "Due $day at $time";
-			$this->Mview->urlMsg("$description: $msg", "/medlog/history?description=$description");
+			$this->Mview->urlMsg("$description: $msg", "/medlog/history?description=$description", false);
 		}
 	}
 	/*------------------------------------------------------------*/
