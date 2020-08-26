@@ -326,14 +326,22 @@ class MedLog extends Mcontroller {
 		
 		$quantity = @$_REQUEST['quantity'];
 
-		$id = $this->Mmodel->dbInsert("medLog", array(
+		$data = array(
 			'user' => $this->loginName,
 			'quantity' => $quantity,
 			'description' => $description,
 			'date' => $date,
 			'datetime' => $datetime,
 			'comments' => $comments,
-		));
+		);
+		$json = json_encode($data);
+		$id = $this->Mmodel->dbInsert("medLog", $data);
+		if ( $id )
+			$this->Mview->tell("Taken: $json",  array(
+				'rememberForNextPage' => true,
+			));
+		else
+			$this->Mview->error("insert failed: $json");
 		$this->redir(@$_REQUEST['date'] ? $id : null);
 	}
 	/*------------------------------------------------------------*/
