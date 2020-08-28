@@ -334,14 +334,16 @@ class MedLog extends Mcontroller {
 			'datetime' => $datetime,
 			'comments' => $comments,
 		);
-		$json = json_encode($data);
+		$descr = "$description: $quantity on $date @ $datetime";
+		if ( $comments )
+			$descr = "$descr - $comments";
 		$id = $this->Mmodel->dbInsert("medLog", $data);
 		if ( $id )
-			$this->Mview->tell("Taken: $json",  array(
+			$this->Mview->tell("Taken: $descr",  array(
 				'rememberForNextPage' => true,
 			));
 		else
-			$this->Mview->error("insert failed: $json");
+			$this->Mview->error("insert failed: $descr");
 		$this->redir(@$_REQUEST['date'] ? $id : null);
 	}
 	/*------------------------------------------------------------*/
