@@ -21,17 +21,16 @@
 				<td>{$row.datetime|substr:0:16}</td>
 				<td>{$row.comments|nl2br}</td>
 				<td>
-					{if $key == 0}
-						<a href="/medLog/insert?description={$row.description}&quantity={$row.quantity}"><img
-							src="/images/go.png"
-							title="Taking Now"
-						/></a>
-					{else}
-						<a href="/medLog/insert?date={$row.date}&datetime={$row.date}+12:00&description={$row.description}&quantity={$row.quantity}"><img
-							src="/images/duplicate.png"
-							title="Duplicate"
-						/></a>
-					{/if}
+					<a href="/medLog/insert?description={$row.description}&quantity={$row.quantity}"><img
+						src="/images/go.png"
+						title="Taking {$row.quantity} Now"
+					/></a>
+				</td>
+				<td>
+					<a href="/medLog/insert?date={$row.date}&datetime={$row.date}+12:00&description={$row.description}&quantity={$row.quantity}"><img
+						src="/images/duplicate.png"
+						title="Duplicate (12pm same day & edit it)"
+					/></a>
 				</td>
 				<td>
 					<a href="/medLog/edit?description={$description}&id={$row.id}"><img
