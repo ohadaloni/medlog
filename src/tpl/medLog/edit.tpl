@@ -1,5 +1,3 @@
-
-<br />
 <div class="container">
 	<form method="get" action="/medLog/update">
 		<table>
@@ -48,7 +46,7 @@
 					comments
 				</td>
 				<td>
-					<textarea cols="80" rows="12" name="comments">{$row.comments}</textarea>
+					<textarea cols="80" rows="5" name="comments">{$row.comments}</textarea>
 				</td>
 			</tr>
 			<tr class="medLogRow">
