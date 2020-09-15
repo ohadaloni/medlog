@@ -380,13 +380,12 @@ class MedLog extends Mcontroller {
 			return;
 		foreach ( $alarms as $alarm ) {
 			$description = $alarm['description'];
-			$day = $alarm['day'];
 			$time = $alarm['time'];
 			$missed = $alarm['missed'];
 			if ( $missed )
-				$msg = "Missed? $day at $time?";
+				$msg = "Missed $time?";
 			else
-				$msg = "Due $day at $time";
+				$msg = "Due @ $time?";
 			$this->Mview->tell("$description: $msg", array(
 				'url' => "/medlog/history?description=$description",
 			));
