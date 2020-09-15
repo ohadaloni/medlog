@@ -39,7 +39,7 @@ class MedLogUtils extends Mcontroller {
 		$timeLeft = $time2take - $now;
 
 		// discontinued, or over-missed
-		if ( $timeLeft < ( - 12*3600 ) )
+		if ( $timeLeft < ( - 6*3600 ) )
 			return(null);
 
 		// not yet
