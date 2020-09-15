@@ -9,7 +9,7 @@
 			<td>quantity</td>
 			<td colspan="2">datetime</td>
 			<td>comments</td>
-			<td colspan="3"></td>
+			<td colspan="2"></td>
 		<tr>
 		{assign var=numRows value=$rows|@count}
 		{foreach from=$rows key=key item=row}
@@ -24,12 +24,6 @@
 					<a href="/medLog/insert?description={$row.description}&quantity={$row.quantity}"><img
 						src="/images/go.png"
 						title="Taking {$row.quantity} Now"
-					/></a>
-				</td>
-				<td>
-					<a href="/medLog/insert?date={$row.date}&datetime={$row.date}+12:00&description={$row.description}&quantity={$row.quantity}"><img
-						src="/images/duplicate.png"
-						title="Duplicate (12pm same day & edit it)"
 					/></a>
 				</td>
 				<td>
