@@ -334,7 +334,9 @@ class MedLog extends Mcontroller {
 			'datetime' => $datetime,
 			'comments' => $comments,
 		);
-		$descr = "$description: $quantity on $date @ $datetime";
+		$strtotime = strtotime($datetime);
+		$time = date("G:i", $strtotime);
+		$descr = "$description: $quantity on $date @ $time";
 		if ( $comments )
 			$descr = "$descr - $comments";
 		$id = $this->Mmodel->dbInsert("medLog", $data);
