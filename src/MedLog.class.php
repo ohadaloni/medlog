@@ -344,7 +344,7 @@ class MedLog extends Mcontroller {
 			));
 		else
 			$this->Mview->error("insert failed: $descr");
-		$this->redir(@$_REQUEST['date'] ? $id : null);
+		$this->redir($id);
 	}
 	/*------------------------------------------------------------*/
 	public function myTimeZone() {
