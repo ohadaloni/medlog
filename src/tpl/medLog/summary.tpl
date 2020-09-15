@@ -5,7 +5,7 @@
 			<td>description</td>
 			<td colspan="2">Last Taken</td>
 			<td>Quantity</td>
-			<td>Taking Now</td>
+			<td>Taking</td>
 			<td>History</td>
 		<tr>
 		{foreach from=$rows key=key item=row}
