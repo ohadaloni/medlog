@@ -27,41 +27,28 @@ class MedLogUtils extends Mcontroller {
 		$myCond = "user = '$loginName'";
 		$dCond = "description = '$description'";
 		$conds = "$myCond and $dCond";
-		$sql = "select datetime from medLog where $conds order by datetime desc limit 3";
+		$sql = "select datetime from medLog where $conds order by datetime desc limit 2";
 		$times = $this->Mmodel->getStrings($sql);
-		if ( count($times) != 3 )
+		if ( count($times) != 2 )
 			return(null);
 		$now = time();
-		$time0 = strtotime($times[2]);
-		$time1 = strtotime($times[1]);
-		$time2 = strtotime($times[0]);
-		$diff1 = $time1 - $time0;
-		$diff2 = $time2 - $time1;
-		$diff2now = $now - $time2;
+		$time0 = strtotime($times[1]);
+		$time1 = strtotime($times[0]);
+		$diff = $time1 - $time0;
+		$time2take = $time1 + $diff;
+		$timeLeft = $time2take - $now;
 
-		// diff1 & diff2 must be resonably the same
-		$d12 = $diff1 / $diff2 ;
-		if ( $d12 < 0.75 || $d12 > 1.25 )
-			return(null);
-		$avg = round(( $diff1 + $diff2) / 2) ;
-
-		// discontinued
-		if ( $diff2now > ( $avg * 2 ) )
+		// discontinued, or over-missed
+		if ( $timeLeft < ( - 12*3600 ) )
 			return(null);
 
-		$time2take = $time2 + $avg;
-		$diffFromNow = $time2take - $now;
 		// not yet
-		if ( $diffFromNow > ( $avg * 0.5 ) || $diffFromNow > 24*3600 )
+		if ( $timeLeft > $diff * 0.5 || $timeLeft > 24*3600 )
 			return(null);
-		if( date("D") == date("D", $time2take) )
-			$day = "Today";
-		else
-			$day = date("l", $time2take);
-		$missed = $time2take < $now;
+
+		$missed = $timeLeft < 0;
 		$alarm = array(
 			'description' => $description,
-			'day' => $day,
 			'time' => date("G:i", $time2take),
 			'missed' => $missed,
 		);
