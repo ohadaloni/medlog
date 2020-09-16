@@ -43,7 +43,7 @@ class MedLogUtils extends Mcontroller {
 			return(null);
 
 		// not yet
-		if ( $timeLeft > $diff * 0.5 || $timeLeft > 12*3600 )
+		if ( $timeLeft > $diff * 0.5 || $timeLeft > 6*3600 )
 			return(null);
 
 		$missed = $timeLeft < 0;
