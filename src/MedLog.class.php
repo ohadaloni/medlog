@@ -43,6 +43,7 @@ class MedLog extends Mcontroller {
 		$this->startTime = microtime(true);
 		ini_set('max_execution_time', 10);
 		ini_set("memory_limit", "30M");
+		$this->Mview->register_modifier("makeLinks", array("Mutils", "makeLinks",));
 
 		if ( $this->loginId ) {
 			$this->loginRec = $this->Mmodel->getById("users", $this->loginId);
