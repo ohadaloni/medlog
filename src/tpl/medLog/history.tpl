@@ -19,7 +19,7 @@
 				<td>{$row.quantity}</td>
 				<td>{$row.weekday}</td>
 				<td>{$row.datetime|substr:0:16}</td>
-				<td>{$row.comments|makelinks|nl2br}</td>
+				<td>{$row.comments|makeLinks|nl2br}</td>
 				<td>
 					<a href="/medLog/insert?description={$row.description}&quantity={$row.quantity}"><img
 						src="/images/go.png"
