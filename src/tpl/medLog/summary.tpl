@@ -6,7 +6,7 @@
 			<td colspan="2">Last Taken</td>
 			<td>Quantity</td>
 			<td>Taking</td>
-			<td>History</td>
+			<td colspan="2">History</td>
 		<tr>
 		{foreach from=$rows key=key item=row}
 			<tr class="medLogRow">
@@ -20,11 +20,13 @@
 						title="Taking Now"
 					/></a>
 				</td>
-				<td align="right">
+				<td>
 					<a href="/medLog/history?description={$row.description}"><img
 						src="/images/list.png"
 						title="History"
 					/></a>
+				</td>
+				<td align="right">
 					({$row.cnt})
 				</td>
 			</tr>
