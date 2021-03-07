@@ -9,7 +9,7 @@
 			<td>quantity</td>
 			<td colspan="2">datetime</td>
 			<td>comments</td>
-			<td colspan="2"></td>
+			<td colspan="3"></td>
 		<tr>
 		{assign var=numRows value=$rows|@count}
 		{foreach from=$rows key=key item=row}
