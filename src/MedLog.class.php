@@ -5,7 +5,6 @@ class MedLog extends Mcontroller {
 	protected $loginName;
 	protected $loginId;
 	/*------------------------------*/
-	protected $Mmemcache;
 	protected $medLogUtils;
 	/*------------------------------*/
 	protected $loginRec;
@@ -19,7 +18,6 @@ class MedLog extends Mcontroller {
 		$this->loginId = MedLogLogin::loginId();
 		$this->loginName = MedLogLogin::loginName();
 
-		$this->Mmemcache = new Mmemcache;
 		$this->medLogUtils = new MedLogUtils;
 		Mutils::setenv("debugLevel", 1);
 	}
