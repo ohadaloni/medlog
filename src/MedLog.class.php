@@ -406,18 +406,13 @@ class MedLog extends Mcontroller {
 		$limit = "limit 1000";
 		$sql = "select * from medLog where $conds $orderBy $limit";
 		$rows = $this->Mmodel->getRows($sql);
-		$this->br();
+		$this->Mview->br();
 		foreach ( $rows as $key => $row )
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
 		$this->Mview->showTpl("medLog/history.tpl", array(
 			'description' => $description,
 			'rows' => $rows,
 		));
-	}
-	/*------------------------------------------------------------*/
-	private function br($howMany = 1) {
-		for($i=0;$i<$howMany;$i++)
-			$this->Mview->pushOutput("<br />\n");
 	}
 	/*------------------------------------------------------------*/
 	private function redir($id = null) {
