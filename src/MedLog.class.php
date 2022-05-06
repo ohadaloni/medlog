@@ -19,7 +19,6 @@ class MedLog extends Mcontroller {
 		$this->loginName = MedLogLogin::loginName();
 
 		$this->medLogUtils = new MedLogUtils;
-		Mutils::setenv("debugLevel", 1);
 	}
 	/*------------------------------------------------------------*/
 	/*------------------------------------------------------------*/
