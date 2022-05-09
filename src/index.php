@@ -5,7 +5,8 @@ require_once(M_DIR."/mfiles.php");
 require_once("medLogFiles.php");
 require_once("MedLog.class.php");
 /*------------------------------------------------------------*/
-date_default_timezone_set("UTC");
+$startTime = microtime(true);
+/*------------------------------------------------------------*/
 global $Mview;
 global $Mmodel;
 $Mview = new Mview;
@@ -18,7 +19,7 @@ if ( isset($_REQUEST['logOut']) ) {
 } else {
 	$medLogLogin->enterSession();
 }
-$medLog = new MedLog;
+$medLog = new MedLog($startTime);
 $medLog->control();
 $Mview->flushOutput();
 /*------------------------------------------------------------*/
