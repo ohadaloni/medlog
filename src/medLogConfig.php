@@ -7,4 +7,5 @@ define('TAS_DIR', "/var/www/vhosts/tas.theora.com");
 require_once(TAS_DIR."/conf/dbCredentials.php");
 require_once(TAS_DIR."/conf/reCaptchaKeys.php");
 define('M_DBNAME', 'medlog');
+date_default_timezone_set("UTC");
 /*------------------------------------------------------------*/
