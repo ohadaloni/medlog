@@ -8,12 +8,9 @@ class MedLog extends Mcontroller {
 	protected $medLogUtils;
 	/*------------------------------*/
 	protected $loginRec;
-	/*------------------------------*/
-	private $startTime;
 	/*------------------------------------------------------------*/
-	public function __construct($startTime) {
+	public function __construct() {
 		parent::__construct();
-		$this->startTime = $startTime;
 
 		$medLogLogin = new MedLogLogin;
 		$this->loginId = MedLogLogin::loginId();
@@ -77,7 +74,6 @@ class MedLog extends Mcontroller {
 	protected function after() {
 		if ( ! $this->showMargins())
 			return;
-		$this->Mview->runningTime($this->startTime);
 		$this->Mview->showTpl("footer.tpl");
 		$this->Mview->showTpl("foot.tpl");
 	}
