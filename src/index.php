@@ -19,7 +19,8 @@ if ( isset($_REQUEST['logOut']) ) {
 } else {
 	$medLogLogin->enterSession();
 }
-$medLog = new MedLog($startTime);
+$medLog = new MedLog;
+$medLog->setStartTime($startTime);
 $medLog->control();
 $Mview->flushOutput();
 /*------------------------------------------------------------*/
