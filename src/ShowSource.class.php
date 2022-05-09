@@ -6,6 +6,8 @@ class ShowSource extends MedLog {
 		$files = $this->fileList();
 		$file = @$_REQUEST['file'];
 		if ( $file ) {
+			/*	$parts = explode("/", $file);	*/
+			/*	$sourceFileName = end($parts);	*/
 			$source = highlight_file($file, true);
 		}
 		$this->Mview->showTpl("showSource/showSource.tpl",  array(
