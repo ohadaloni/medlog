@@ -11,8 +11,9 @@ class MedLog extends Mcontroller {
 	/*------------------------------*/
 	private $startTime;
 	/*------------------------------------------------------------*/
-	public function __construct() {
+	public function __construct($startTime) {
 		parent::__construct();
+		$this->startTime = $startTime;
 
 		$medLogLogin = new MedLogLogin;
 		$this->loginId = MedLogLogin::loginId();
@@ -37,7 +38,6 @@ class MedLog extends Mcontroller {
 	/*------------------------------*/
 	protected function before() {
 		parent::before();
-		$this->startTime = microtime(true);
 		ini_set('max_execution_time', 10);
 		ini_set("memory_limit", "30M");
 		$this->Mview->register_modifier("makeLinks", array("Mutils", "makeLinks",));
