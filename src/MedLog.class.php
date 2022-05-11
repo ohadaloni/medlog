@@ -335,7 +335,7 @@ class MedLog extends Mcontroller {
 			$descr = "$descr - $comments";
 		$id = $this->dbInsert("medLog", $data);
 		if ( $id )
-			$this->Mview->tell("Taken: $descr",  array(
+			$this->Mview->tell("Taken: $descr", array(
 				'rememberForNextPage' => true,
 			));
 		else
