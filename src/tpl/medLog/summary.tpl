@@ -10,7 +10,9 @@
 		<tr>
 		{foreach from=$rows key=key item=row}
 			<tr class="medLogRow">
-				<td>{$row.description}</td>
+				<td>
+					<a title="{$row.historyText}" style="color:black;">{$row.description}</a>
+				</td>
 				<td>{$row.weekday}</td>
 				<td>{$row.datetime|substr:0:16}</td>
 				<td>{$row.quantity}</td>
