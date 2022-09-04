@@ -259,6 +259,16 @@ class MedLog extends Mcontroller {
 		$sql = "select $fields from medLog where $myCond $groupBy $orderBy";
 		$rows = $this->Mmodel->getRows($sql);
 		foreach ( $rows as $key => $row ) {
+			$description = $row['description'];
+			$history = $this->__history($description);
+			$historyText = "";
+			foreach ( $history as $item ) {
+				$datetime = $item['datetime'];
+				$quantity = $item['quantity'];
+				$historyText .= "$datetime $quantity\n";
+			}
+			$rows[$key]['historyText'] = $historyText;
+
 			$id = $row['id'];
 			$sql = "select quantity from medLog where id = $id";
 			$quantity = $this->Mmodel->getString($sql);
@@ -392,7 +402,7 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/add.tpl");
 	}
 	/*------------------------------------------------------------*/
-	private function _history($description) {
+	private function __history($description) {
 		$loginName = $this->loginName;
 		$myCond = "user = '$loginName'";
 		$dCond = "description = '$description'";
@@ -401,6 +411,11 @@ class MedLog extends Mcontroller {
 		$limit = "limit 1000";
 		$sql = "select * from medLog where $conds $orderBy $limit";
 		$rows = $this->Mmodel->getRows($sql);
+		return($rows);
+	}
+	/*------------------------------------------------------------*/
+	private function _history($description) {
+		$rows = $this->__history($description);
 		$this->Mview->br();
 		foreach ( $rows as $key => $row )
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
