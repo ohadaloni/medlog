@@ -21,13 +21,13 @@
 				<td>{$row.datetime|substr:0:16}</td>
 				<td>{$row.comments|makeLinks|nl2br}</td>
 				<td>
-					<a href="/medLog/insert?description={$row.description}&quantity={$row.quantity}"><img
+					<a href="/medLog/insert?description={$row.description|urlencode}&quantity={$row.quantity}"><img
 						src="/images/go.png"
 						title="Taking {$row.quantity} Now"
 					/></a>
 				</td>
 				<td>
-					<a href="/medLog/edit?description={$description}&id={$row.id}"><img
+					<a href="/medLog/edit?description={$description|urlencode}&id={$row.id}"><img
 						src="/images/edit.png"
 						title="Edit"
 					/></a>
