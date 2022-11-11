@@ -460,6 +460,7 @@ class MedLog extends Mcontroller {
 			return;
 		}
 		$description = @$_REQUEST['description'];
+		$description = urlencode($description);
 		if ( $description )
 			$this->redirect("/medLog/history?description=$description");
 		else
