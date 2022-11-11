@@ -17,13 +17,13 @@
 				<td>{$row.datetime|substr:0:16}</td>
 				<td>{$row.quantity}</td>
 				<td>
-					<a href="/medLog/insert?description={$row.description}&quantity={$row.quantity}"><img
+					<a href="/medLog/insert?description={$row.description|urlencode}&quantity={$row.quantity}"><img
 						src="/images/go.png"
 						title="Taking Now"
 					/></a>
 				</td>
 				<td>
-					<a href="/medLog/history?description={$row.description}"><img
+					<a href="/medLog/history?description={$row.description|urlencode}"><img
 						src="/images/list.png"
 						title="History"
 					/></a>
