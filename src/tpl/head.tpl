@@ -11,6 +11,7 @@
 	<script src="/js/jquery.hoverClass.js"></script>
 	<script src="/js/jquery.showImage.js"></script>
 	<script src="/js/medLog.js"></script>
+	<script src="/js/clock.js"></script>
 </head>
-<body>
+<body onload="clock()">
 
