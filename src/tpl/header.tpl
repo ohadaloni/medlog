@@ -7,5 +7,5 @@
 		src="/images/medlog.png" /></a>
 		<br />
 		<h4 style="color:blue;">Calmly Take Meds</h4>
-		<h5 style="color:blue;">{$datetime}</h5>
+		<h5 id="clock" style="color:blue;">{$datetime}</h5>
 </center>
