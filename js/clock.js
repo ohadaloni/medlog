@@ -1,20 +1,14 @@
 function clock() {
   const time = new Date();
   Dn = time.getDay();
-  Y = time.getFullYear();
-  m = time.getMonth();
-  d = time.getDate();
-  G = time.getHours();
-  i = time.getMinutes();
-  s = time.getSeconds();
   days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   D = days[Dn];
-  m++;
-  m = pad0(m);
-  d = pad0(d);
+  G = time.getHours();
+  i = time.getMinutes();
   i = pad0(i);
+  s = time.getSeconds();
   s = pad0(s);
-  document.getElementById('clock').innerHTML = D + " " + Y + "-" + m + "-" + d + " " +  G + ":" + i ; // + ":" + s;
+  document.getElementById('clock').innerHTML = D + " " + G + ":" + i + ":" + s;
   setTimeout(clock, 1000);
 }
 
