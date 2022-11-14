@@ -14,7 +14,7 @@ function clock() {
   d = pad0(d);
   i = pad0(i);
   s = pad0(s);
-  document.getElementById('clock').innerHTML = D + " " + Y + "-" + m + "-" + d + " " +  G + ":" + i + ":" + s;
+  document.getElementById('clock').innerHTML = D + " " + Y + "-" + m + "-" + d + " " +  G + ":" + i ; // + ":" + s;
   setTimeout(clock, 1000);
 }
 
