@@ -8,7 +8,8 @@ function clock() {
   i = pad0(i);
   s = time.getSeconds();
   s = pad0(s);
-  document.getElementById('clock').innerHTML = D + " " + G + ":" + i + ":" + s;
+  document.getElementById('clock').innerHTML =
+  	D + " " + G + ":" + i + "<span style=\"color:#ccc\">" + ":" + s + "</span>";
   setTimeout(clock, 1000);
 }
 
