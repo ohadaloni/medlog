@@ -46,7 +46,7 @@
 					comments
 				</td>
 				<td>
-					<textarea cols="80" rows="20" name="comments">{$row.comments}</textarea>
+					<textarea cols="80" rows="4" name="comments">{$row.comments}</textarea>
 				</td>
 			</tr>
 			<tr class="medLogRow">
