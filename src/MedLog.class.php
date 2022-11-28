@@ -345,9 +345,7 @@ class MedLog extends Mcontroller {
 			$descr = "$descr - $comments";
 		$id = $this->dbInsert("medLog", $data);
 		if ( $id )
-			$this->Mview->tell("Taken: $descr", array(
-				'rememberForNextPage' => true,
-			));
+			$this->Mview->msgLater("Taken: $descr");
 		else
 			$this->Mview->error("insert failed: $descr");
 		$this->redir($id);
@@ -359,12 +357,31 @@ class MedLog extends Mcontroller {
 			$this->dbUpdate("users", $this->loginId, array(
 				'timezone' => $tz,
 			));
+			$this->Mview->msgLater("Timezone set to $tz");
 			$this->redir();
 		}
+		$tz = Mutils::getenv("tz");
 		$sql = "select tz from timezones order by 1";
 		$tzs = $this->Mmodel->getStrings($sql, 24*3600);
 		$this->Mview->showTpl("setTz.tpl", array(
 			'tzs' => $tzs,
+			'tz' => $tz,
+		));
+	}
+	/*------------------------------------------------------------*/
+	public function lately() {
+		$loginName = $this->loginName;
+		$myCond = "user = '$loginName'";
+		$aWeekAgo = date("Y-m-d", time() - 7*24*3600);
+		$dateCond = "date >= '$aWeekAgo'";
+		$conds = "$myCond and $dateCond";
+		$orderBy = "order by date desc, datetime";
+		$sql = "select * from medLog where $conds $orderBy";
+		$rows = $this->Mmodel->getRows($sql);
+		foreach ( $rows as $key => $row )
+			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
+		$this->Mview->showTpl("medLog/lately.tpl", array(
+			'rows' => $rows,
 		));
 	}
 	/*------------------------------------------------------------*/

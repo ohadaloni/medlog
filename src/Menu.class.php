@@ -10,7 +10,30 @@ class Menu extends Mcontroller {
 	/*------------------------------------------------------------*/
 	/*------------------------------------------------------------*/
 	private function dd() {
+		$tz = Mutils::getenv("tz");
+		$loginName = MedLogLogin::loginName();
+		if ( $tz )
+			$tzTitle = "My Time Zone - $tz";
+		else
+			$tzTitle = "My Time Zone";
 		$menu = array(
+			'Medlog' => array(
+				array(
+					'name' => 'tz',
+					'title' => $tzTitle,
+					'url' => "/medLog/myTimeZone",
+				),
+				array(
+					'name' => 'export',
+					'title' => 'Export CSV',
+					'url' => "/medLog/export",
+				),
+				array(
+					'name' => 'lately',
+					'title' => 'Lately',
+					'url' => "/medLog/lately",
+				),
+			),
 			'admin' => array(
 				array(
 					'name' => 'showSource',
@@ -24,25 +47,7 @@ class Menu extends Mcontroller {
 					'target' => "clone",
 				),
 			),
-		);
-		$loginName = MedLogLogin::loginName();
-		if ( $loginName ) {
-			$tz = Mutils::getenv("tz");
-			if ( $tz )
-				$tzTitle = "My Time Zone - $tz";
-			else
-				$tzTitle = "My Time Zone";
-			$menu[$loginName] = array(
-				array(
-					'name' => 'tz',
-					'title' => $tzTitle,
-					'url' => "/medLog/myTimeZone",
-				),
-				array(
-					'name' => 'export',
-					'title' => 'Export CSV',
-					'url' => "/medLog/export",
-				),
+			$loginName => array(
 				array(
 					'name' => 'chpass',
 					'title' => 'Change Password',
@@ -53,8 +58,8 @@ class Menu extends Mcontroller {
 					'title' => 'Log Off',
 					'url' => "/?logOut=logOut",
 				),
-			);
-		}
+			),
+		);
 		return($menu);
 	}
 	/*------------------------------------------------------------*/
