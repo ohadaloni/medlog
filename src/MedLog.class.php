@@ -378,8 +378,19 @@ class MedLog extends Mcontroller {
 		$orderBy = "order by date desc, datetime";
 		$sql = "select * from medLog where $conds $orderBy";
 		$rows = $this->Mmodel->getRows($sql);
-		foreach ( $rows as $key => $row )
+		foreach ( $rows as $key => $row ) {
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
+			$description = $row['description'];
+			$history = $this->__history($description);
+			$historyText = "";
+			foreach ( $history as $item ) {
+				$datetime = $item['datetime'];
+				$quantity = $item['quantity'];
+				$historyText .= "$datetime $quantity\n";
+			}
+			$rows[$key]['historyText'] = $historyText;
+			$rows[$key]['cnt'] = count($history);
+		}
 		$this->Mview->showTpl("medLog/lately.tpl", array(
 			'rows' => $rows,
 		));
