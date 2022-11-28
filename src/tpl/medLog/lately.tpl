@@ -2,19 +2,20 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
-			<td align="center" colspan="7">Lately</td>
+			<td align="center" colspan="9">Lately</td>
 		</tr>
 		<tr class="medLogHeaderRow">
 			<td>description</td>
 			<td>quantity</td>
 			<td>time</td>
 			<td>comments</td>
-			<td colspan="3"></td>
+			<td colspan="2">History</td>
+			<td colspan="3">take/edit/...</td>
 		<tr>
 		{foreach from=$rows key=key item=row}
 			{if $row.date != $lastDate}
 				<tr>
-					<td colspan="7" align="center" style="background-color:#bbb;">
+					<td colspan="9" align="center" style="background-color:#bbb;">
 						{$row.weekday} {$row.date}
 					</td>
 				</tr>
@@ -25,6 +26,15 @@
 				<td>{$row.quantity}</td>
 				<td>{$row.datetime|substr:10:6}</td>
 				<td>{$row.comments|makeLinks|nl2br}</td>
+				<td>
+					<a href="/medLog/history?description={$row.description|urlencode}"><img
+						src="/images/list.png"
+						title="History"
+					/></a>
+				</td>
+				<td align="right">
+					({$row.cnt})
+				</td>
 				<td>
 					<a href="/medLog/insert?description={$row.description|urlencode}&quantity={$row.quantity|urlencode}"><img
 						src="/images/go.png"
