@@ -287,7 +287,7 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/edit.tpl", array(
 			'row' => $row,
 		));
-		$this->lately();
+		$this->_history($row['description']);
 	}
 	/*------------------------------------------------------------*/
 	public function update() {
