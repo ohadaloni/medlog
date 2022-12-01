@@ -420,8 +420,9 @@ class MedLog extends Mcontroller {
 				$msg = "Missed $time?";
 			else
 				$msg = "Due @ $time?";
+			$descriptionEncoded = urlencode($description);
 			$this->Mview->tell("$description: $msg", array(
-				'url' => "/medlog/history?description=$description",
+				'url' => "/medlog/history?description=$descriptionEncoded",
 			));
 		}
 	}
