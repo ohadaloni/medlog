@@ -11,5 +11,7 @@
 			<a href="/medlog/lately">{$datetime}</a>
 		</h5>
 		<h4 title="Now:" id="clock" style="color:blue;"></h4>
-		<h4 title="Stopwatch since this page started:" id="stopWatch" style="color:blue;"></h4>
+		{if $smarty.request.stopWatch}
+			<h4 title="Stopwatch since this page started:" id="stopWatch" style="color:blue;"></h4>
+		{/if}
 </center>
