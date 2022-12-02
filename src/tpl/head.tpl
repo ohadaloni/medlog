@@ -13,5 +13,5 @@
 	<script src="/js/medLog.js"></script>
 	<script src="/js/clock.js"></script>
 </head>
-<body onload="clock()">
+<body onload="clocks()">
 
