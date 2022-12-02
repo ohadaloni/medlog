@@ -485,7 +485,7 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	private function redir($id = null) {
 		if ( $id ) {
-			$this->redirect("/medLog/edit?id=$id");
+			$this->redirect("/medLog/edit?stopWatch=stopWatch&id=$id");
 			return;
 		}
 		$description = @$_REQUEST['description'];
