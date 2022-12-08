@@ -451,6 +451,7 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/history.tpl", array(
 			'description' => $description,
 			'rows' => $rows,
+			'stopWatchStartTime' => strtotime($rows[0]['datetime']),
 		));
 	}
 	/*------------------------------------------------------------*/
@@ -485,7 +486,7 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	private function redir($id = null) {
 		if ( $id ) {
-			$this->redirect("/medLog/edit?stopWatch=stopWatch&id=$id");
+			$this->redirect("/medLog/edit?id=$id");
 			return;
 		}
 		$description = @$_REQUEST['description'];
