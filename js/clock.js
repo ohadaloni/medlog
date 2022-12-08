@@ -25,10 +25,8 @@ var startTime;
 function stopWatch() {
 	const time = new Date();
 	if ( startTime === undefined )
-		startTime = time.getTime();
-
-	now = time.getTime() - startTime;
-	seconds = Math.floor(now / 1000);
+		startTime = document.getElementById('stopWatch').innerHTML ;
+	seconds = Math.floor(time.getTime() / 1000) - startTime;
 	/*	alert(startTime + ", now: " + now + ", seconds:" + seconds);	*/
 	secs = seconds % 60 ;
 	minutes = ( seconds - secs ) / 60;
@@ -44,6 +42,7 @@ function stopWatch() {
 	} else {
 		str = secs;
 	}
+	str = '<h3 style="color:blue;">' + str + '</h3>' ;
 	document.getElementById('stopWatch').innerHTML = str;
 	setTimeout(this.stopWatch, 1000);
 }
