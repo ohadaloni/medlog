@@ -32,7 +32,13 @@ function stopWatch() {
 	minutes = ( seconds - secs ) / 60;
 	mins = minutes % 60;
 	hours = ( minutes - mins ) /60;
-	if ( hours > 0 )  {
+	hrs = hours % 24 ;
+	days = ( hours  - hrs ) / 24 ;
+	if ( days > 0 ) {
+		secs = pad0(secs);
+		mins = pad0(mins);
+		str = days + "d" + " " + hrs + ":" + mins + ":" + secs ;
+	} else if ( hours > 0 )  {
 		secs = pad0(secs);
 		mins = pad0(mins);
 		str = hours + ":" + mins + ":" + secs ;
