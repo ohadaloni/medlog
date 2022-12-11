@@ -2,7 +2,7 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
-			<td align="center" colspan="8" id="stopWatch">{$stopWatchStartTime}</td>
+			<td align="center" colspan="8" id="stopWatch">{$row0.datetime|strtotime}</td>
 		</tr>
 		<tr class="medLogHeaderRow">
 			<td align="center" colspan="8">{$description} - history</td>
