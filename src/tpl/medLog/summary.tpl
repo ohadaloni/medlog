@@ -2,6 +2,9 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
+			<td align="center" colspan="8" id="stopWatch">{$row0.datetime|strtotime}</td>
+		</tr>
+		<tr class="medLogHeaderRow">
 			<td>description</td>
 			<td colspan="2">Last Taken</td>
 			<td>Quantity</td>
