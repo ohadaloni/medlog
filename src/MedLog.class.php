@@ -276,6 +276,7 @@ class MedLog extends Mcontroller {
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
 		}
 		$this->Mview->showTpl("medLog/summary.tpl", array(
+			'row0' => $rows[0],
 			'rows' => $rows,
 		));
 	}
@@ -451,7 +452,7 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/history.tpl", array(
 			'description' => $description,
 			'rows' => $rows,
-			'stopWatchStartTime' => strtotime($rows[0]['datetime']),
+			'row0' => $rows[0],
 		));
 	}
 	/*------------------------------------------------------------*/
