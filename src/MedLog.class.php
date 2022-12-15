@@ -94,9 +94,13 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	/*------------------------------------------------------------*/
 	public function forgotPass() {
-		$email = $_REQUEST['email'];
+		$email = @$_REQUEST['email'];
+		if ( ! $email ) {
+			error_log("forgotPass: email: eh?");
+			return;
+		}
 		if ( ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			$this->Mview->msg("register: '$email': Not an email");
+			$this->Mview->msg("forgotPass: '$email': Not an email");
 			return;
 		}
 		$str = $this->Mmodel->str($email);
@@ -256,7 +260,14 @@ class MedLog extends Mcontroller {
 		$orderBy = "order by 5 desc";
 		$loginName = $this->loginName;
 		$myCond = "user = '$loginName'";
-		$sql = "select $fields from medLog where $myCond $groupBy $orderBy";
+		if ( @$_REQUEST['complete'] ) {
+			$timeCond = "true";
+		} else {
+			$ago = date("Y-m-d", time() - 183*24*3600);
+			$timeCond = "date >= '$ago'";
+		}
+		$conds = "$myCond and $timeCond";
+		$sql = "select $fields from medLog where $conds $groupBy $orderBy";
 		$rows = $this->Mmodel->getRows($sql);
 		foreach ( $rows as $key => $row ) {
 			$description = $row['description'];
