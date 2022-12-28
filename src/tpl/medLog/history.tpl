@@ -2,10 +2,9 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
-			<td align="center" colspan="8" id="stopWatch">{$row0.datetime|strtotime}</td>
-		</tr>
-		<tr class="medLogHeaderRow">
-			<td align="center" colspan="8">{$description} - history</td>
+			<td align="center" colspan="3">{$row0.description}</td>
+			<td></td>
+			<td align="center" colspan="5" id="stopWatch">{$row0.datetime|strtotime}</td>
 		</tr>
 		<tr class="medLogHeaderRow">
 			<td>#</td>
