@@ -4,7 +4,13 @@
 		<tr class="medLogHeaderRow">
 			<td align="center" colspan="3"><h3>{$row0.description}</h3></td>
 			<td></td>
-			<td align="center" colspan="5" id="stopWatch">{$row0.datetime|strtotime}</td>
+			<td align="center" colspan="5" id="stopWatch">
+				{if $currentRow}
+					{$currentRow.datetime|strtotime}
+				{else}
+					{$row0.datetime|strtotime}
+				{/if}
+			</td>
 		</tr>
 		<tr class="medLogHeaderRow">
 			<td>#</td>
