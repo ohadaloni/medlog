@@ -299,7 +299,7 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/edit.tpl", array(
 			'row' => $row,
 		));
-		$this->_history($row['description']);
+		$this->_history($row['description'], $row);
 	}
 	/*------------------------------------------------------------*/
 	public function update() {
@@ -458,7 +458,7 @@ class MedLog extends Mcontroller {
 		return($rows);
 	}
 	/*------------------------------------------------------------*/
-	private function _history($description) {
+	private function _history($description, $currentRow = null) {
 		$rows = $this->__history($description);
 		$this->Mview->br();
 		foreach ( $rows as $key => $row )
@@ -467,6 +467,7 @@ class MedLog extends Mcontroller {
 			'description' => $description,
 			'rows' => $rows,
 			'row0' => $rows[0],
+			'currentRow' => $currentRow,
 		));
 	}
 	/*------------------------------------------------------------*/
