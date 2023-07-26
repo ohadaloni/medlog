@@ -252,12 +252,11 @@ class MedLog extends Mcontroller {
 			'max(id) as id',
 			'description',
 			'max(date) as date',
-			'count(*) as cnt',
 			'max(datetime) as datetime',
 		);
 		$fields = implode(", ", $fields);
 		$groupBy = "group by 2";
-		$orderBy = "order by 5 desc";
+		$orderBy = "order by 4 desc";
 		$loginName = $this->loginName;
 		$myCond = "user = '$loginName'";
 		if ( @$_REQUEST['complete'] ) {
@@ -278,6 +277,7 @@ class MedLog extends Mcontroller {
 				$quantity = $item['quantity'];
 				$historyText .= "$datetime $quantity\n";
 			}
+			$rows[$key]['cnt'] = count($history);;
 			$rows[$key]['historyText'] = $historyText;
 
 			$id = $row['id'];
