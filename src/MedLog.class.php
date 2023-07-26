@@ -270,7 +270,7 @@ class MedLog extends Mcontroller {
 		$rows = $this->Mmodel->getRows($sql);
 		foreach ( $rows as $key => $row ) {
 			$description = $row['description'];
-			$history = $this->__history($description);
+			$history = $this->medLogUtils->history($description);
 			$historyText = "";
 			foreach ( $history as $item ) {
 				$datetime = $item['datetime'];
@@ -395,7 +395,7 @@ class MedLog extends Mcontroller {
 		foreach ( $rows as $key => $row ) {
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
 			$description = $row['description'];
-			$history = $this->__history($description);
+			$history = $this->medLogUtils->history($description);
 			$historyText = "";
 			foreach ( $history as $item ) {
 				$datetime = $item['datetime'];
@@ -446,20 +446,8 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/add.tpl");
 	}
 	/*------------------------------------------------------------*/
-	private function __history($description) {
-		$loginName = $this->loginName;
-		$myCond = "user = '$loginName'";
-		$dCond = "description = '$description'";
-		$conds = "$myCond and $dCond";
-		$orderBy = "order by datetime desc";
-		$limit = "limit 2000";
-		$sql = "select * from medLog where $conds $orderBy $limit";
-		$rows = $this->Mmodel->getRows($sql);
-		return($rows);
-	}
-	/*------------------------------------------------------------*/
 	private function _history($description, $currentRow = null) {
-		$rows = $this->__history($description);
+		$rows = $this->medLogUtils->history($description);
 		$this->Mview->br();
 		foreach ( $rows as $key => $row )
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
