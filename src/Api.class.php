@@ -8,5 +8,12 @@ class Api extends MedLog {
 		echo $json;
 	}
 	/*------------------------------------------------------------*/
+	public function history() {
+		$description = $_REQUEST['description'];
+		$history = $this->medLogUtils->history($description);
+		$json = json_encode($history);
+		echo $json;
+	}
+	/*------------------------------------------------------------*/
 }
 /*------------------------------------------------------------*/
