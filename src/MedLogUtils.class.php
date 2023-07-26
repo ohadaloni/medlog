@@ -55,4 +55,16 @@ class MedLogUtils extends Mcontroller {
 		return($alarm);
 	}
 	/*------------------------------------------------------------*/
+	public function history($description) {
+		$loginName = MedLogLogin::loginName();
+		$myCond = "user = '$loginName'";
+		$dCond = "description = '$description'";
+		$conds = "$myCond and $dCond";
+		$orderBy = "order by datetime desc";
+		$limit = "limit 2000";
+		$sql = "select * from medLog where $conds $orderBy $limit";
+		$rows = $this->Mmodel->getRows($sql);
+		return($rows);
+	}
+	/*------------------------------------------------------------*/
 }
