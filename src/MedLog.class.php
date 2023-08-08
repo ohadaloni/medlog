@@ -285,7 +285,8 @@ class MedLog extends Mcontroller {
 			$quantity = $this->Mmodel->getString($sql);
 			$rows[$key]['quantity'] = $quantity;
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
-			$rows[$key]['ago'] = $this->ago($row['datetime']);
+			if ( $key != 0 )
+				$rows[$key]['ago'] = $this->ago($row['datetime']);
 		}
 		$this->Mview->showTpl("medLog/summary.tpl", array(
 			'row0' => $rows[0],
@@ -306,11 +307,11 @@ class MedLog extends Mcontroller {
 		$days = ( $totalHours - $hours ) / 24;
 		$daysS = $days == 1 ? "" : "s";
 		if ( $days )
-			$ago = sprintf("%d + %02d:%02d:%02d", $days, $hours, $minutes, $seconds);
+			$ago = sprintf("%d + %02d:%02d", $days, $hours, $minutes);
 		else if ( $hours )
-			$ago = sprintf("%d:%02d:%02d", $hours, $minutes, $seconds);
+			$ago = sprintf("%d:%02d", $hours, $minutes);
 		else if ( $minutes )
-			$ago = sprintf("%02d:%02d", $minutes, $seconds);
+			$ago = sprintf("%02d:%02d m/s", $minutes, $seconds);
 		else
 			$ago = $seconds;
 		return($ago);
@@ -473,8 +474,20 @@ class MedLog extends Mcontroller {
 	private function _history($description, $currentRow = null) {
 		$rows = $this->medLogUtils->history($description);
 		$this->Mview->br();
-		foreach ( $rows as $key => $row )
+		$cnt = count($rows);
+		foreach ( $rows as $key => $row ) {
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
+			$rowTime = strtotime($row['datetime']);
+			$prevRowTime = @strtotime($rows[$key+1]['datetime']);
+			if ( $key == 0 )
+				/*	$diff = $this->diffString(time() - $rowTime );	*/
+				$diff = "" ; //appears on top
+			else if ( $key == $cnt-1 )
+				$diff = "";
+			else
+				$diff = $this->diffString($rowTime - $prevRowTime);
+			$rows[$key]['diff'] = $diff;
+		}
 		$this->Mview->showTpl("medLog/history.tpl", array(
 			'description' => $description,
 			'rows' => $rows,
