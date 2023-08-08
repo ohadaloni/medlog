@@ -294,8 +294,10 @@ class MedLog extends Mcontroller {
 	}
 	/*------------------------------------------------------------*/
 	private function ago($datetime) {
-		$stats['time'] = date("Y-m-d G:i:s", $stats['time']);
-		$totalSeconds = time() - strtotime($datetime);
+		return($this->diffString(time() - strtotime($datetime)));
+	}
+	/*------------------------------------------------------------*/
+	private function diffString($totalSeconds) {
 		$seconds = $totalSeconds % 60;
 		$totalMinutes = ($totalSeconds - $seconds)/60;
 		$minutes = $totalMinutes % 60;
