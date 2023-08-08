@@ -285,11 +285,33 @@ class MedLog extends Mcontroller {
 			$quantity = $this->Mmodel->getString($sql);
 			$rows[$key]['quantity'] = $quantity;
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
+			$rows[$key]['ago'] = $this->ago($row['datetime']);
 		}
 		$this->Mview->showTpl("medLog/summary.tpl", array(
 			'row0' => $rows[0],
 			'rows' => $rows,
 		));
+	}
+	/*------------------------------------------------------------*/
+	private function ago($datetime) {
+		$stats['time'] = date("Y-m-d G:i:s", $stats['time']);
+		$totalSeconds = time() - strtotime($datetime);
+		$seconds = $totalSeconds % 60;
+		$totalMinutes = ($totalSeconds - $seconds)/60;
+		$minutes = $totalMinutes % 60;
+		$totalHours = ($totalMinutes - $minutes)/60;
+		$hours = $totalHours % 24;
+		$days = ( $totalHours - $hours ) / 24;
+		$daysS = $days == 1 ? "" : "s";
+		if ( $days )
+			$ago = sprintf("%d + %02d:%02d:%02d", $days, $hours, $minutes, $seconds);
+		else if ( $hours )
+			$ago = sprintf("%d:%02d:%02d", $hours, $minutes, $seconds);
+		else if ( $minutes )
+			$ago = sprintf("%02d:%02d", $minutes, $seconds);
+		else
+			$ago = $seconds;
+		return($ago);
 	}
 	/*------------------------------------------------------------*/
 	public function edit() {
