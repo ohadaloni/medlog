@@ -22,7 +22,13 @@
 				</td>
 				<td>{$row.weekday}</td>
 				<td>{$row.datetime|substr:0:16}</td>
-				<td align="right">{$row.ago}</td>
+				<td align="right">
+					{if $key == 0 }
+						<img src="/images/arrowUp.png" />
+					{else}
+						{$row.ago}
+					{/if}
+				</td>
 				<td>{$row.quantity}</td>
 				<td>
 					<a href="/medLog/insert?description={$row.description|urlencode}&quantity={$row.quantity|urlencode}"><img
