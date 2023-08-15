@@ -2,7 +2,13 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
-			<td align="center" colspan="3"><h3>{$row0.description}</h3></td>
+			<td align="center" colspan="3">
+				<h3>
+					<a
+						href="/medlog/history?description={$row0.description}&full=full"
+						title="click for full history"
+					>{$row0.description}</a></h3>
+			</td>
 			<td></td>
 			<td align="center" colspan="5" id="stopWatch">
 				{if $currentRow}
@@ -20,7 +26,6 @@
 			<td>comments</td>
 			<td colspan="3"></td>
 		<tr>
-		{assign var=numRows value=$rows|@count}
 		{foreach from=$rows key=key item=row}
 			{assign var=No value=`$numRows-$key`}
 			<tr class="medLogRow">
