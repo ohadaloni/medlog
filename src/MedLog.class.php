@@ -476,7 +476,7 @@ class MedLog extends Mcontroller {
 		$this->Mview->br();
 		$numRows = count($rows);
 		if ( ! $complete ) 
-			$rows = array_slice($rows, 0, 100);
+			$rows = array_slice($rows, 0, 10);
 		$cnt = count($rows);
 		foreach ( $rows as $key => $row ) {
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
