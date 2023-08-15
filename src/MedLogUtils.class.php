@@ -61,8 +61,7 @@ class MedLogUtils extends Mcontroller {
 		$dCond = "description = '$description'";
 		$conds = "$myCond and $dCond";
 		$orderBy = "order by datetime desc";
-		$limit = "limit 2000";
-		$sql = "select * from medLog where $conds $orderBy $limit";
+		$sql = "select * from medLog where $conds $orderBy";
 		$rows = $this->Mmodel->getRows($sql);
 		return($rows);
 	}
