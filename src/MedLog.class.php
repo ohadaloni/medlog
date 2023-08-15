@@ -244,7 +244,7 @@ class MedLog extends Mcontroller {
 	/*------------------------------------------------------------*/
 	public function history() {
 		$description = $_REQUEST['description'];
-		$this->_history($description);
+		$this->_history($description, null, @$_REQUEST['full']);
 	}
 	/*------------------------------------------------------------*/
 	public function summary() {
@@ -324,7 +324,7 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/edit.tpl", array(
 			'row' => $row,
 		));
-		$this->_history($row['description'], $row);
+		$this->_history($row['description'], $row, false);
 	}
 	/*------------------------------------------------------------*/
 	public function update() {
@@ -471,9 +471,12 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/add.tpl");
 	}
 	/*------------------------------------------------------------*/
-	private function _history($description, $currentRow = null) {
+	private function _history($description, $currentRow, $complete) {
 		$rows = $this->medLogUtils->history($description);
 		$this->Mview->br();
+		$numRows = count($rows);
+		if ( ! $complete ) 
+			$rows = array_slice($rows, 0, 100);
 		$cnt = count($rows);
 		foreach ( $rows as $key => $row ) {
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
@@ -493,6 +496,7 @@ class MedLog extends Mcontroller {
 			'rows' => $rows,
 			'row0' => $rows[0],
 			'currentRow' => $currentRow,
+			'numRows' => $numRows,
 		));
 	}
 	/*------------------------------------------------------------*/
