@@ -34,11 +34,7 @@
 				<td>{$row.weekday}</td>
 				<td>{$row.datetime|substr:0:16}</td>
 				<td align="right">
-					{if $key == 0 }
-						<img src="/images/arrowUp.png" />
-					{else}
-						{$row.diff}
-					{/if}
+					{$row.diff}
 				</td>
 				<td>{$row.comments|makeLinks|nl2br}</td>
 				<td>
