@@ -482,10 +482,7 @@ class MedLog extends Mcontroller {
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
 			$rowTime = strtotime($row['datetime']);
 			$prevRowTime = @strtotime($rows[$key+1]['datetime']);
-			if ( $key == 0 )
-				/*	$diff = $this->diffString(time() - $rowTime );	*/
-				$diff = "" ; //appears on top
-			else if ( $key == $cnt-1 )
+			if ( $key == $cnt-1 )
 				$diff = "";
 			else
 				$diff = $this->diffString($rowTime - $prevRowTime);
