@@ -9,7 +9,9 @@
 						title="click for full history"
 					>{$row0.description}</a></h3>
 			</td>
-			<td></td>
+			<td align="center">
+				<h3 style="color:blue;">{$row0.quantity}</h3>
+			</td>
 			<td align="center" colspan="5" id="stopWatch">
 				{if $currentRow}
 					{$currentRow.datetime|strtotime}
