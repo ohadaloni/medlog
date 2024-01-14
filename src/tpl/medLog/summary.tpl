@@ -2,10 +2,19 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
-			<td align="center" colspan="3"><h3>{$row0.description}</h3></td>
-			<td align="right" id="stopWatch">{$row0.datetime|strtotime}</td>
-			<td><h3>{$row0.quantity}</h3></td>
-			<td colspan="3"></td>
+			<td align="center" colspan="3">
+				<h3>
+					<a style="color:blue;"
+						href="/medlog/history?description={$row0.description}&full=full"
+						title="click for full history"
+					>{$row0.description}</a></h3>
+			</td>
+			<td align="center">
+				<h3 style="color:blue;">{$row0.quantity}</h3>
+			</td>
+			<td align="center" colspan="5" id="stopWatch">
+				{$row0.datetime|strtotime}
+			</td>
 		</tr>
 		<tr class="medLogHeaderRow">
 			<td>description</td>
