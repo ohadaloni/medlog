@@ -4,7 +4,7 @@
 		<tr class="medLogHeaderRow">
 			<td align="center" colspan="3">
 				<h3>
-					<a
+					<a style="color:blue;"
 						href="/medlog/history?description={$row0.description}&full=full"
 						title="click for full history"
 					>{$row0.description}</a></h3>
