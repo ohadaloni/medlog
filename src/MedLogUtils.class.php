@@ -47,9 +47,15 @@ class MedLogUtils extends Mcontroller {
 			return(null);
 
 		$missed = $timeLeft < 0;
+		$date2take = date("Y-m-d", $time2take);
+		$today = date("Y-m-d");
+		if ( $today == $date2take )
+			$time =  date("G:i", $time2take);
+		else
+			$time =  date("j G:i", $time2take);
 		$alarm = array(
 			'description' => $description,
-			'time' => date("G:i", $time2take),
+			'time' => $time,
 			'missed' => $missed,
 		);
 		return($alarm);
