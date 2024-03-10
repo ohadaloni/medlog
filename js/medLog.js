@@ -3,6 +3,10 @@ $(function() {
 	medLogPaintRows(document);
 	/*	$(".imgToolTip").imgToolTip();	*/
 	$(".showImage").showImage();
+	$(".medLogRow", document).click(function(){
+		$(".medLogRow").not(this).removeClass("keepHilited");
+		$(this).addClass("keepHilited");
+	});
 });
 /*------------------------------------------------------------*/
 function medLogPaintRows(context)
