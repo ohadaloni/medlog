@@ -27,7 +27,9 @@
 		{foreach from=$rows key=key item=row}
 			<tr class="medLogRow">
 				<td>
-					<a title="{$row.historyText}" href="/medlog/history?description={$row.description}">{$row.description}</a>
+					<a title="{$row.historyText}"
+						style="color:blue;"
+						href="/medlog/history?description={$row.description}">{$row.description}</a>
 				</td>
 				<td>{$row.weekday}</td>
 				<td>{$row.datetime|substr:0:16}</td>
