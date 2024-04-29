@@ -27,7 +27,11 @@
 			{/if}
 			{assign var=lastDate value=$row.date}
 			<tr class="medLogRow">
-				<td>{$row.description}</td>
+				<td>
+					<a title="{$row.historyText}"
+						style="color:blue;"
+						href="/medlog/history?description={$row.description}">{$row.description}</a>
+				</td>
 				<td>{$row.quantity}</td>
 				<td>{$row.datetime|substr:10:6}</td>
 				<td>{$row.comments|makeLinks|nl2br}</td>
