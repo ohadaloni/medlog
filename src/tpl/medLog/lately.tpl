@@ -2,8 +2,8 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
-			<td align="center" colspan="3"><h3>{$row0.description}</h3></td>
-			<td></td>
+			<td align="center" colspan="3"><h3 style="color:blue;">{$row0.description}</h3></td>
+			<td align="center"><h3 style="color:blue;">{$row0.quantity}</h3></td>
 			<td align="center" colspan="5" id="stopWatch">{$row0.datetime|strtotime}</td>
 		</tr>
 		<tr class="medLogHeaderRow">
