@@ -471,12 +471,19 @@ class MedLog extends Mcontroller {
 		$this->Mview->showTpl("medLog/add.tpl");
 	}
 	/*------------------------------------------------------------*/
-	private function _history($description, $currentRow, $complete) {
+	private function _history($description, $currentRow, $long) {
 		$rows = $this->medLogUtils->history($description);
 		$this->Mview->br();
 		$numRows = count($rows);
-		if ( ! $complete ) 
-			$rows = array_slice($rows, 0, 10);
+		$longKey = "$description-long";
+		$ttl = 300;
+		$length = $this->Mmemcache->get($longKey);
+		if ( ! $length )
+			$length = 10;
+		if ( $long )
+			$length += 10;
+		$rows = array_slice($rows, 0, $length);
+		$this->Mmemcache->set($longKey, $length, $ttl);
 		$cnt = count($rows);
 		foreach ( $rows as $key => $row ) {
 			$rows[$key]['weekday'] = Mdate::weekDayStr(Mdate::wday($row['date']));
