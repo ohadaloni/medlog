@@ -476,6 +476,7 @@ class MedLog extends Mcontroller {
 		$this->Mview->br();
 		$numRows = count($rows);
 		$longKey = "$description-long";
+		$uniqueNumber = rand(1, 1000000);
 		$ttl = 300;
 		$length = $this->Mmemcache->get($longKey);
 		if ( ! $length )
@@ -501,6 +502,7 @@ class MedLog extends Mcontroller {
 			'row0' => $rows[0],
 			'currentRow' => $currentRow,
 			'numRows' => $numRows,
+			'uniqueNumber' => $uniqueNumber,
 		));
 	}
 	/*------------------------------------------------------------*/
