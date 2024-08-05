@@ -5,7 +5,7 @@
 			<td align="center" colspan="3">
 				<h3>
 					<a style="color:blue;"
-						href="/medlog/history?description={$row0.description}&full=full"
+						href="/medlog/history?description={$row0.description}&full=full&uniqueNumber={$uniqueNumber}#theEnd"
 						title="click for full history"
 					>{$row0.description}</a></h3>
 			</td>
@@ -61,6 +61,21 @@
 				</td>
 			</tr>
 		{/foreach}
+		<tr class="medLogHeaderRow">
+			<td align="center" colspan="3">
+				<h3>
+					<a style="color:blue;"
+						href="/medlog/history?description={$row0.description}&full=full&uniqueNumber={$uniqueNumber}#theEnd"
+						title="click for full history"
+					>{$row0.description}</a></h3>
+			</td>
+			<td align="center">
+				<h3 style="color:blue;">{$row0.quantity}</h3>
+			</td>
+			<td align="center" colspan="5">
+			</td>
+		</tr>
 	</table>
 </div>
+<a name="theEnd"></a>
 <br />
