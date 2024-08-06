@@ -132,7 +132,7 @@ class MedLog extends Mcontroller {
 	}
 	/*------------------------------------------------------------*/
 	public function register() {
-		$email = $_REQUEST['email'];
+		$email = @$_REQUEST['email'];
 		if ( ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			$this->Mview->msg("register: '$email': Not an email");
 			return;
