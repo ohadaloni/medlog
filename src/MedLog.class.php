@@ -247,6 +247,22 @@ class MedLog extends Mcontroller {
 		$this->_history($description, null, @$_REQUEST['full']);
 	}
 	/*------------------------------------------------------------*/
+	public function alert() {
+		$user = $this->loginName;
+		$description = $_REQUEST['description'];
+		$sql = "delete from noAlerts where user = '$user' and description = '$description'";
+		$this->Mmodel->sql($sql);
+		$this->redir();
+	}
+	/*------------------------------------------------------------*/
+	public function noAlert() {
+		$this->Mmodel->dbInsert("noAlerts", array(
+			'user' =>$this->loginName,
+			'description' => $_REQUEST['description'],
+		));
+		$this->redir();
+	}
+	/*------------------------------------------------------------*/
 	public function summary() {
 		$fields = array(
 			'max(id) as id',
@@ -496,10 +512,15 @@ class MedLog extends Mcontroller {
 				$diff = $this->diffString($rowTime - $prevRowTime);
 			$rows[$key]['diff'] = $diff;
 		}
+		$row0 = $rows[0];
+		$user = $this->loginName;
+		$sql = "select count(*) from noAlerts where user = '$user' and description = '$description'";
+		$noAlerts = $this->Mmodel->getInt($sql);
+		$row0['noAlerts'] = $noAlerts;
 		$this->Mview->showTpl("medLog/history.tpl", array(
 			'description' => $description,
 			'rows' => $rows,
-			'row0' => $rows[0],
+			'row0' => $row0,
 			'currentRow' => $currentRow,
 			'numRows' => $numRows,
 			'uniqueNumber' => $uniqueNumber,
