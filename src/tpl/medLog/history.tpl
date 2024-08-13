@@ -12,11 +12,26 @@
 			<td align="center">
 				<h3 style="color:blue;">{$row0.quantity}</h3>
 			</td>
-			<td align="center" colspan="5" id="stopWatch">
+			<td align="center" colspan="3" id="stopWatch">
 				{if $currentRow}
 					{$currentRow.datetime|strtotime}
 				{else}
 					{$row0.datetime|strtotime}
+				{/if}
+			</td>
+			<td align="center" colspan="2">
+				{if $row0.noAlerts}
+					<a href="/medlog/alert?description={$row0.description}"
+						><img
+							src="/images/red.png"
+							title="(click to) alert me when due or missed"
+						/></a>
+				{else}
+					<a href="/medlog/noAlert?description={$row0.description}"
+						><img
+							src="/images/green.png"
+							title="on alert when due or missed (click to turn off)"
+						/></a>
 				{/if}
 			</td>
 		</tr>
