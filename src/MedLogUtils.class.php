@@ -10,7 +10,15 @@ class MedLogUtils extends Mcontroller {
 		$myCond = "user = '$loginName'";
 		$ago = date("Y-m-d", time() - 31*24*3600);
 		$agoCond = "date > '$ago'";
-		$conds = "$myCond and $agoCond";
+		$sql = "select description from noAlerts where user = '$loginName'";
+		$noAlerts = $this->Mmodel->getStrings($sql);
+		if ( $noAlerts ) {
+			$noAlertsInList = "'".implode($noAlerts, "', '")."'";
+			$alertsCond = "description not in ( $noAlertsInList )";
+			$conds = "$myCond and $agoCond and $alertsCond";
+		} else {
+			$conds = "$myCond and $agoCond";
+		}
 		$fields = "description, max(id) as id";
 		$groupBy = "group by 1";
 		$sql = "select $fields from medLog where $conds $groupBy";
