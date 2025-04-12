@@ -2,7 +2,7 @@
 <div class="container">
 	<table>
 		<tr class="medLogHeaderRow">
-			<td align="center" colspan="3">
+			<td align="center" colspan="5">
 				<h3>
 					<a style="color:blue;"
 						href="/medlog/history?description={$row0.description}&full=full&uniqueNumber={$uniqueNumber}#theEnd"
@@ -41,7 +41,7 @@
 			<td colspan="2">datetime</td>
 			<td></td>
 			<td>comments</td>
-			<td colspan="3"></td>
+			<td colspan="5"></td>
 		<tr>
 		{foreach from=$rows key=key item=row}
 			{assign var=No value=`$numRows-$key`}
@@ -54,12 +54,14 @@
 					{$row.diff}
 				</td>
 				<td>{$row.comments|makeLinks|nl2br}</td>
+				<td><img  src="/images/go.png" style="opacity:50%"/></td>
 				<td>
 					<a href="/medLog/insert?description={$row.description|urlencode}&quantity={$row.quantity|urlencode}"><img
 						src="/images/go.png"
 						title="Taking {$row.quantity} Now"
 					/></a>
 				</td>
+				<td><img  src="/images/go.png" style="opacity:50%"/></td>
 				<td>
 					<a href="/medLog/edit?description={$description|urlencode}&id={$row.id}"><img
 						src="/images/edit.png"
@@ -87,7 +89,7 @@
 			<td align="center">
 				<h3 style="color:blue;">{$row0.quantity}</h3>
 			</td>
-			<td align="center" colspan="5">
+			<td align="center" colspan="7">
 			</td>
 		</tr>
 	</table>
