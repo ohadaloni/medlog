@@ -48,7 +48,7 @@ function stopWatch() {
 	} else {
 		str = secs;
 	}
-	str = '<h3 style="color:blue;">' + str + '</h3>' ;
+	str = '<h1 style="color:blue;">' + str + '</h1>' ;
 	document.getElementById('stopWatch').innerHTML = str;
 	setTimeout(this.stopWatch, 1000);
 }
