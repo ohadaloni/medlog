@@ -204,6 +204,8 @@ class MedLog extends Mcontroller {
 			'url' => "http://medlog.theora.com",
 		));
 		$this->Mview->msg("password is $passwd");
+		$this->Mview->msg("Medlog is a tiny little robot that helps you control your meds taking");
+		$this->Mview->msg("Just tell it you took a med, and and will tell you when it is due, or missed, whichever the case may be");
 	}
 	/*------------------------------------------------------------*/
 	public function changePasswd() {
