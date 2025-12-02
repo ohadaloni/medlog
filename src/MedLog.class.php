@@ -457,6 +457,26 @@ class MedLog extends Mcontroller {
 		));
 	}
 	/*------------------------------------------------------------*/
+	public function search() {
+		$q = @$_REQUEST['q'];
+		if ( ! $q ) {
+			$this->Mview->msg("No q");
+			return;
+		}
+		$loginName = $this->loginName;
+		$myCond = "user = '$loginName'";
+		$sql = "select description, count(*) as cnt, max(date) as maxDate from medLog where $myCond and description like '%$q%' group by description order by maxDate desc";
+		$rows = $this->Mmodel->getRows($sql);
+		if ( ! $rows ) {
+			$this->Mview->msg("$q: Nothing found");
+			return;
+		}
+		$this->Mview->msg("Search Results for '$q'");
+		$this->Mview->showTpl("medLog/searchResults.tpl", array(
+			'rows' => $rows,
+		));
+	}
+	/*------------------------------------------------------------*/
 	public function export() {
 		$fields = "description, quantity, datetime, comments";
 		$loginName = $this->loginName;
