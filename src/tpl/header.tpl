@@ -11,4 +11,7 @@
 			<a href="/medlog/lately">{$datetime}</a>
 		</h5>
 		<h4 title="Now:" id="clock" style="color:blue;"></h4>
+		<form action="/medlog/search">
+			<input type="text" size="12" name="q" placeholder="search" />
+		</form>
 </center>
